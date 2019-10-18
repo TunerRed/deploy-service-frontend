@@ -11,25 +11,20 @@
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-location"></i>
-          <span>导航一</span>
+          <span>后端</span>
         </template>
-        <el-menu-item-group>
-          <template slot="title">分组一</template>
-          <el-menu-item index="/">选项一</el-menu-item>
-          <el-menu-item index="1-2">选项二</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group>
-          <template slot="title">分组二</template>
-          <el-menu-item index="1-3">选项三</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <template slot="title">选项四</template>
-          <el-menu-item index="1-4-1">选项一</el-menu-item>
+        <el-submenu index="1-1">
+          <template slot="title">部署</template>
+          <el-menu-item index="/service/deploy/git">从Git</el-menu-item>
+          <el-menu-item index="/service/deploy/file">从文件</el-menu-item>
         </el-submenu>
+        <el-menu-item index="/service/back">回滚</el-menu-item>
+        <el-menu-item index="1-3">EUREKA</el-menu-item>
+        <el-menu-item index="1-4">我的配置</el-menu-item>
       </el-submenu>
       <el-menu-item index="test" >
         <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
+        <span slot="title">前端</span>
       </el-menu-item>
     </el-menu>
   </el-col>
