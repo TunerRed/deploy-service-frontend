@@ -9,10 +9,7 @@
       text-color="#fff"
       active-text-color="#ffd04b">
       <el-submenu index="1">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>后端</span>
-        </template>
+        <template slot="title"><i class="el-icon-location"></i><span>后端</span></template>
         <el-submenu index="1-1">
           <template slot="title">部署</template>
           <el-menu-item index="/service/deploy/git">从Git</el-menu-item>
@@ -22,9 +19,9 @@
         <el-menu-item index="1-3">EUREKA</el-menu-item>
         <el-menu-item index="1-4">我的配置</el-menu-item>
       </el-submenu>
-      <el-menu-item index="test" >
+      <el-menu-item index="/test" >
         <i class="el-icon-menu"></i>
-        <span slot="title">前端</span>
+        <span slot="title">测试</span>
       </el-menu-item>
     </el-menu>
   </el-col>
@@ -38,14 +35,15 @@
           }
         },
         methods: {
+            // todo 获取正在运行的资源
             handleOpen(key, keyPath) {
-                console.log(key,keyPath)
+                //console.log(key,keyPath)
             },
             handleClose(key, keyPath) {
-                console.log(key, keyPath)
+                //console.log(key, keyPath)
             },
             handleClick(key, keyPath) {
-                console.log(this.$router, key, keyPath)
+                //console.log(this.$router, key, keyPath)
             }
         }
     }

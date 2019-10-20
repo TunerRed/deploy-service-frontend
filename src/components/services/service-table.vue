@@ -22,7 +22,6 @@
 </template>
 
 <script>
-  import  from '@/api/api.js'
 export default {
     name: "service-table",
     data() {
@@ -46,7 +45,7 @@ export default {
         }
     },
     mounted() {
-        this.tableData = getServicesInfo()
+        this.tableData = this.$api.service.getServicesInfo().resultData.list
     },
     methods: {
         click(val) {

@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import MenuAside from "./menu-aside";
+import MenuAside from "../menu-aside";
 export default {
   name: 'HelloWorld',
     components: {MenuAside},

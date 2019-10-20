@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import testComponent from '@/components/test-component'
-import Service from '@/views/service/deploy-service'
+import HelloWorld from '@/components/test/HelloWorld'
+import testComponent from '@/components/test/test-component'
+import ServiceGit from '@/views/service/deploy-service-git'
+import ServiceFile from '@/views/service/deploy-service-file'
 
 Vue.use(Router)
 
@@ -22,13 +23,13 @@ export default new Router({
     },
     {
       path: BASE_URL_SERVICE + '/deploy/git',
-      name: 'service',
-      component: Service
+      name: 'ServiceGit',
+      component: ServiceGit
     },
     {
       path: BASE_URL_SERVICE + '/deploy/file',
-      name: 'service',
-      component: Service
+      name: 'ServiceFile',
+      component: ServiceFile
     }
   ]
 })
