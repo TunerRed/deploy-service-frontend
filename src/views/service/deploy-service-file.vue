@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h5>SERVICE</h5>
+    <h4>从文件部署，请上传您的压缩包</h4>
+    <h5 style="color: red">请确定在目标文件夹下而不是右键选择文件夹打包文件</h5>
+    <el-divider><i class="el-icon-files"></i></el-divider>
     <el-row :gutter="20">
       <el-col :span="10">
         <deploy-uploader ref="uploader"></deploy-uploader>
@@ -9,7 +11,6 @@
         <deploy-start-form :inline="false" :ip-list="ipList" @confirm="onDeployServices"></deploy-start-form>
       </el-col>
     </el-row>
-    <el-divider><i class="el-icon-files"></i></el-divider>
   </div>
 </template>
 

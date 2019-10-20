@@ -26,22 +26,7 @@ export default {
     name: "service-table",
     data() {
         return {
-            tableData: [
-                {
-                    name: '111',
-                    date: '20191018',
-                    branchList: ['release-1015','dev','master'],
-                    branch: 'release-1015',
-                    deploy: false
-                },
-                {
-                    name: '222',
-                    date: '20190930',
-                    branchList: ['release-1015','dev','master'],
-                    branch: 'dev',
-                    deploy: true
-                }
-            ]
+            tableData: []
         }
     },
     mounted() {
@@ -56,5 +41,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

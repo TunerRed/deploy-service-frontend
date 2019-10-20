@@ -4,6 +4,8 @@ import HelloWorld from '@/components/test/HelloWorld'
 import testComponent from '@/components/test/test-component'
 import ServiceGit from '@/views/service/deploy-service-git'
 import ServiceFile from '@/views/service/deploy-service-file'
+import RollbackService from '@/views/service/rollback-service'
+import Eureka from '@/views/service/eureka'
 
 Vue.use(Router)
 
@@ -30,6 +32,16 @@ export default new Router({
       path: BASE_URL_SERVICE + '/deploy/file',
       name: 'ServiceFile',
       component: ServiceFile
+    },
+    {
+      path: BASE_URL_SERVICE + '/rollback',
+      name: 'RollbackService',
+      component: RollbackService
+    },
+    {
+      path: BASE_URL_SERVICE + '/eureka',
+      name: 'Eureka',
+      component: Eureka
     }
   ]
 })

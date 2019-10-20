@@ -1,6 +1,7 @@
 <template>
   <div>
     <h5>SERVICE</h5>
+    <el-divider><i class="el-icon-menu"></i></el-divider>
     <service-table></service-table>
     <el-divider><i class="el-icon-s-promotion"></i></el-divider>
     <deploy-start-form :ip-list="ipList" @confirm="onDeployServices"></deploy-start-form>
