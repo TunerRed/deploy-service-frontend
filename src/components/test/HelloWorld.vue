@@ -84,7 +84,7 @@
         </ul>
       </el-col>
       <el-col >
-        <el-button type="primary">test</el-button>
+        <el-button type="primary" icon="fa2-icon fa2dianyuan">test</el-button>
         <div id="main" style="height: 200px;width: 100%;"></div>
       </el-col>
     </el-row>

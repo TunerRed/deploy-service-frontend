@@ -8,6 +8,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import echarts from 'echarts'
 import api from '@/api/api.js'
 
+import '@/assets/icon/iconfont.css'
+
 Vue.config.productionTip = false
 Vue.use(elementUI)
 Vue.prototype.$echarts=echarts
