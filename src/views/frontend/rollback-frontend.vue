@@ -1,6 +1,8 @@
 <template>
   <div>
-    <deploy-start-form :ipList="ipList" @change="onServerChange" @confirm="confirm">
+    <h5>FRONTEND</h5>
+    <el-divider><i class="el-icon-menu"></i></el-divider>
+    <deploy-start-form ref="start" :ipList="ipList" @change="onServerChange" @confirm="confirm">
       <el-form-item label="可用备份">
         <el-tooltip effect="dark" :content="availPackage.info" placement="left-start">
           <el-select v-model="index">
@@ -35,7 +37,10 @@
             },
             confirm(deployForm) {
                 if (this.availPackage==null || this.availPackage.name==null){
-                    this.$message({message:'请选择一个回滚包',type:'warn'})
+                    this.$notify({title:'错误',message:'请选择一个回滚包',type:'error'})
+                    this.$nextTick(()=>{
+                        this.$refs.start.deploying=false
+                    })
                     return
                 }
                 this.rollback(deployForm.serverIP, this.availPackage.name, deployForm.phoneNumber)

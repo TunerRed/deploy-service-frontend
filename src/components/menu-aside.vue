@@ -15,14 +15,14 @@
           <el-menu-item index="/service/deploy/git">从Git</el-menu-item>
           <el-menu-item index="/service/deploy/file">从文件</el-menu-item>
         </el-submenu>
-        <el-menu-item index="/service/rollback">回滚</el-menu-item>
         <el-menu-item index="/service/eureka">EUREKA</el-menu-item>
-        <el-menu-item index="1-4">我的配置</el-menu-item>
       </el-submenu>
-      <el-menu-item index="/test" >
-        <i class="el-icon-menu"></i>
-        <span slot="title">测试</span>
-      </el-menu-item>
+      <el-submenu index="2">
+        <template slot="title"><i class="el-icon-location"></i><span>前端</span></template>
+        <el-menu-item index="/frontend/deploy">部署</el-menu-item>
+        <el-menu-item index="/frontend/rollback">回滚</el-menu-item>
+      </el-submenu>
+      <el-menu-item index="/system/config" ><i class="el-icon-setting"></i>我的配置</el-menu-item>
     </el-menu>
   </el-col>
 </template>

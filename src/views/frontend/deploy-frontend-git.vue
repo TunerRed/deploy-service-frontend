@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h5>SERVICE</h5>
+    <h5>FRONTEND</h5>
     <el-divider><i class="el-icon-menu"></i></el-divider>
     <service-table ref="table"></service-table>
     <el-divider><i class="el-icon-s-promotion"></i></el-divider>
@@ -12,12 +12,12 @@
     import ServiceTable from "@/components/services/service-table";
     import DeployStartForm from "@/components/common/deploy-start-form";
     export default {
-        name: "deploy-service-git",
+        name: "deplot-frontend-git",
         components: {DeployStartForm, ServiceTable},
         data() {
-          return {
-            ipList: ''
-          }
+            return {
+                ipList: ''
+            }
         },
         created() {
             //this.$api.show.createError('i am error')
@@ -41,7 +41,7 @@
 </script>
 
 <style scoped>
-.require {
-  color: red;
-}
+  .require {
+    color: red;
+  }
 </style>

@@ -6,7 +6,7 @@
   >
     <el-table-column label="是否勾选" width="100">
       <template slot-scope="scope">
-        <el-checkbox v-model="scope.row.deploy" @change="click"></el-checkbox>
+        <el-checkbox v-model="scope.row.deploy"></el-checkbox>
       </template>
     </el-table-column>
     <el-table-column prop="name" label="服务" min-width="300"></el-table-column>
@@ -33,9 +33,6 @@ export default {
         this.tableData = this.$api.service.getServicesInfo().resultData.list
     },
     methods: {
-        click(val) {
-            console.log(this.tableData[0].deploy)
-        }
     }
 }
 </script>

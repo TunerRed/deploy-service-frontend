@@ -8,7 +8,7 @@
         <deploy-uploader ref="uploader"></deploy-uploader>
       </el-col>
       <el-col :span="10">
-        <deploy-start-form :inline="false" :ip-list="ipList" @confirm="onDeployServices"></deploy-start-form>
+        <deploy-start-form ref="start" :inline="false" :ip-list="ipList" @confirm="onDeployServices"></deploy-start-form>
       </el-col>
     </el-row>
   </div>
@@ -34,6 +34,8 @@
             onDeployServices(deployForm) {
                 //todo 文件上传接口
                 this.$refs.uploader.uploadFileTo(deployForm.serverIP + '')
+                this.$api.service.deployFromFile(deployForm.serverIP, deployForm.phoneNumber)
+                this.$message({type:'success',message:'已开始部署,请等待完成'})
                 // this.$refs["deployForm"].validate((valid) => {
                 //     if (valid) {
                 //         alert("success");

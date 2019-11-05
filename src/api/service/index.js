@@ -10,37 +10,34 @@ export default {
       resultData: {
         list: [
           {
-            name: '',
+            name: 'test',
+            jar: 'ccbft-test-1031.jar',
             //确认应用有使用actuator
-            version: '',
-            port: '',
-            ip: '',
-            repositories: '',
-            health: ''
-            //todo 运行时间要去后台差进程，目前不做
-            //runTime: ''
+            version: '1121',
+            port: '1234',
+            started: true,
+            actuator: '',
+            runTime: '1031'
           },
           {
             name: 'sso',
+            jar: 'ccbft-sso-1031.jar',
             //确认应用有使用actuator
             version: 'release-0815',
             port: '9966',
-            ip: '128.196.0.1',
-            repositories: 'myspringboot-sso',
-            health: 'UP'
-            //todo 运行时间要去后台差进程，目前不做
-            //runTime: ''
+            started: false,
+            actuator: 'UP',
+            runTime: '1031'
           },
           {
             name: 'system-db',
+            jar: 'ccbft-db-1031.jar',
             //确认应用有使用actuator
             version: 'release-1015',
             port: '1024',
-            ip: '128.196.0.1,128.196.1.2',
-            repositories: 'myspringboot-config',
-            health: 'DOWN'
-            //todo 运行时间要去后台差进程，目前不做
-            //runTime: ''
+            started: true,
+            actuator: 'DOWN',
+            runTime: '1031'
           }
         ]
       }
@@ -74,16 +71,16 @@ export default {
       }
     }
   },
-  deployFromGit(url,phone) {
+  deployFromGit(url,phone,deployList) {
+    console.log(url,phone,deployList)
     return {
-      resultCode: state_code.SUCCESS,
-      resultData: {
-        list: [
-          {name: 'ccbft-govern-sso', deployed: true, started: true, actutor: '', message: ''},
-          {name: 'ccbft-govern-kafka', deployed: true, started: true, actutor: '', message: ''},
-          {name: 'superise-mother-fucker', deployed: true, started: true, actutor: '', message: ''},
-        ]
-      }
+      resultCode: state_code.SUCCESS
+    }
+  },
+  deployFromFile(url,phone) {
+    console.log(url,phone)
+    return {
+      resultCode: state_code.SUCCESS
     }
   },
   getAvailableServerList() {

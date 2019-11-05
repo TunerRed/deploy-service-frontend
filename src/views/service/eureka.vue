@@ -1,27 +1,27 @@
 <template>
     <div>
       <el-row>
-        <el-select v-model="serverIP">
+        <el-select size="small" v-model="serverIP">
           <el-option v-for="(serverIP, index) in serverIPList" :key="index" :label="serverIP" :value="serverIP"></el-option>
         </el-select>
-        <el-button type="primary" @click="onSearch">查询</el-button>
+        <el-button type="primary" size="small" @click="onSearch">查询</el-button>
       </el-row>
       <el-table
         :data="tableData"
         border
-        style="width: 100%"
+        style="width: fit-content;height: fit-content;"
         v-loading="loading"
       >
         <el-table-column label="应用" prop="name" width="150" fixed="left"></el-table-column>
-        <el-table-column label="版本" prop="version" width="120"></el-table-column>
+        <el-table-column label="JAR包" prop="jar" width="150"></el-table-column>
         <el-table-column label="端口" prop="port" width="100"></el-table-column>
-        <el-table-column label="IP" prop="ip" width="200"></el-table-column>
-        <el-table-column label="仓库" prop="repositories" width="250"></el-table-column>
-        <el-table-column label="健康状态" prop="health" width="80"></el-table-column>
-        <el-table-column label="操作" width="100" fixed="right">
+        <el-table-column label="运行时间" prop="runTime" width="100"></el-table-column>
+        <el-table-column label="actuator" prop="actuator" width="500"></el-table-column>
+        <el-table-column label="操作" width="80" fixed="right">
           <template slot-scope="scoped">
             <!-- 操作按钮 -->
-            <el-button type="primary" size="small">敬请期待</el-button>
+            <el-button v-if="!scoped.row.started" type="primary" size="small">启动</el-button>
+            <el-button v-if="scoped.row.started" type="danger" size="small">停止</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -52,14 +52,18 @@
           onSearch() {
               this.loading = true
               let result = this.$api.service.getEurekaList(this.serverIP)
-              this.loading = false
+              setTimeout(()=>{
+                  this.loading = false;
+                  this.$message({message: '查询完成',type: 'success'});
+              },1000)
               this.tableData = result.resultData.list
-              this.$message({message: '查询完成',type: 'success'})
           }
         }
     }
 </script>
 
 <style scoped>
-
+  .el-row {
+  padding-bottom: 15px;
+  }
 </style>
