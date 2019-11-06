@@ -11,7 +11,7 @@ export default {
         list: [
           {
             name: 'test',
-            jar: 'ccbft-test-1031.jar',
+            jar: '乌拉-test-1031.jar',
             //确认应用有使用actuator
             version: '1121',
             port: '1234',
@@ -21,7 +21,7 @@ export default {
           },
           {
             name: 'sso',
-            jar: 'ccbft-sso-1031.jar',
+            jar: '乌拉-sso-1031.jar',
             //确认应用有使用actuator
             version: 'release-0815',
             port: '9966',
@@ -31,7 +31,7 @@ export default {
           },
           {
             name: 'system-db',
-            jar: 'ccbft-db-1031.jar',
+            jar: '乌拉-db-1031.jar',
             //确认应用有使用actuator
             version: 'release-1015',
             port: '1024',
@@ -64,8 +64,8 @@ export default {
       resultCode: state_code.SUCCESS,
       resultData: {
         list: [
-          {name: 'ccbft-govern-sso', date: '20191018', branchList: ['release-1015','release-0815','dev'],branch:'release-1015',deploy: true},
-          {name: 'ccbft-govern-kafka', date: '20191018', branchList: ['release','release-0815','dev'],branch:'dev',deploy: true},
+          {name: '乌拉-govern-sso', date: '20191018', branchList: ['release-1015','release-0815','dev'],branch:'release-1015',deploy: true},
+          {name: '乌拉-govern-kafka', date: '20191018', branchList: ['release','release-0815','dev'],branch:'dev',deploy: true},
           {name: 'superise-mother-fucker', date: '20190818', branchList: ['release','master','dev'],branch:'release',deploy: false},
         ]
       }
@@ -88,9 +88,9 @@ export default {
       resultCode: state_code.SUCCESS,
       resultData: {
         list: [
-          'http://128.196.193.49',
-          'http://128.196.193.51',
-          'http://128.196.188.89'
+          'http://128.196.0.1',
+          'http://128.196.0.2',
+          'http://128.196.0.3'
         ]
       }
     }
@@ -101,9 +101,9 @@ export default {
       {name: 'service20190930.tar.gz', info: '0930'},
       {name: 'service20191015.tar.gz', info: '1015更新'},
     ]
-    if (serverIP.toString().endsWith("51")){
+    if (serverIP.toString().endsWith("02")){
       list.push({name: 'service20190920.tar.gz', info: '0920'})
-    }else if (serverIP.toString().endsWith("89")){
+    }else if (serverIP.toString().endsWith("03")){
       list.push({name: 'service20190922.tar.gz', info: '0922'})
     }
     //todo 文件如何排序应该取决于后台返回的数据
