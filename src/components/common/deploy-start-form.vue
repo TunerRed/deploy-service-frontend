@@ -41,6 +41,10 @@
             onConfirm() {
                 this.$refs.deployForm.validate((valid)=>{
                     if (valid) {
+                        if (this.deployForm.phoneNumber.length != 11){
+                            this.$message({type:'error',message:'电话必须为11位数字！'})
+                            return
+                        }
                         this.$emit('confirm',this.deployForm)
                         this.deploying=true
                     }else {
