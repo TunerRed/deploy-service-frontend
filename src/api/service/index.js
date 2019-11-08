@@ -1,4 +1,5 @@
-import {state_code} from "../code";
+import state_code from "../code";
+import https from '@/utils/axios'
 
 require('../code.js')
 
@@ -96,23 +97,7 @@ export default {
     }
   },
   getAvailPack(serverIP) {
-    let list=[
-      {name: 'service20190830.tar.gz', info: '0830'},
-      {name: 'service20190930.tar.gz', info: '0930'},
-      {name: 'service20191015.tar.gz', info: '1015更新'},
-    ]
-    if (serverIP.toString().endsWith("02")){
-      list.push({name: 'service20190920.tar.gz', info: '0920'})
-    }else if (serverIP.toString().endsWith("03")){
-      list.push({name: 'service20190922.tar.gz', info: '0922'})
-    }
-    //todo 文件如何排序应该取决于后台返回的数据
-    list.sort((a, b) => {return a.name>b.name?-1:1})
-    return {
-      resultCode: state_code.SUCCESS,
-      resultData: {
-        list: list
-      }
-    }
+    //todo 请求不到数据 Promise/await/then/etc..
+    return https.Post('/frontend/getAvailBackup', {"serverIP": serverIP});
   }
 }

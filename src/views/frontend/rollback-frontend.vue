@@ -32,8 +32,11 @@
             this.ipList = this.$api.service.getAvailableServerList().resultData.list
         },
         methods: {
-            onServerChange(serverIP) {
-                this.packageList = this.$api.service.getAvailPack(serverIP).resultData.list
+            async onServerChange(serverIP) {
+                let tmp = await this.$api.service.getAvailPack(serverIP)
+                if (tmp != null) {
+                  this.packageList = tmp.resultData.list
+                } 
             },
             confirm(deployForm) {
                 if (this.availPackage==null || this.availPackage.name==null){
