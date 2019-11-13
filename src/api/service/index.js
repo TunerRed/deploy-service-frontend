@@ -3,6 +3,8 @@ import https from '@/utils/axios'
 
 require('../code.js')
 
+const BASE_URL = '/service'
+
 export default {
   getEurekaList(serverIP) {
     return {
@@ -97,7 +99,6 @@ export default {
     }
   },
   getAvailPack(serverIP) {
-    //todo 请求不到数据 Promise/await/then/etc..
-    return https.Post('/frontend/getAvailBackup', {"serverIP": serverIP});
+    return https.Post(BASE_URL+'/getAvailBackup', {"serverIP": serverIP});
   }
 }

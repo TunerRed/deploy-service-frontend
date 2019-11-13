@@ -2,11 +2,11 @@
   <el-form :model="deployForm" :rules="rules" :inline="line" ref="deployForm">
     <el-form-item label="可选服务器" prop="serverIP">
       <el-select v-model="deployForm.serverIP" @change="onChange" placeholder="选择要部署的服务器">
-        <el-option v-for="(item, index) in deployForm.serverIPList" :key="index" :label="item" :value="item"></el-option>
+        <el-option v-for="(item, index) in serverIPList" :key="index" :label="item" :value="item"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item  prop="phoneNumber" label="通知">
-      <el-input v-model.number="deployForm.phoneNumber" placeholder="请输入11位电话" class="phone-input" maxlength="11"></el-input>
+      <el-input v-model="deployForm.phoneNumber" placeholder="请输入11位电话" class="phone-input"></el-input>
     </el-form-item>
     <slot></slot>
     <el-button type="primary" @click="onConfirm" :disabled="deploying">开始部署</el-button>
@@ -20,7 +20,6 @@
         data() {
             return {
                 deployForm: {
-                    serverIPList: this.ipList,
                     serverIP: '',
                     phoneNumber: ''
                 },
@@ -32,19 +31,19 @@
                     ],
                     phoneNumber: [
                         {required: true, message: "不能空", trigger: 'blur'},
-                        { type: 'number', message: '必须为数字', trigger: 'blur'}
                     ]
                 }
+            }
+        },
+        computed: {
+            serverIPList () {
+                return this.ipList
             }
         },
         methods: {
             onConfirm() {
                 this.$refs.deployForm.validate((valid)=>{
                     if (valid) {
-                        if (this.deployForm.phoneNumber.length != 11){
-                            this.$message({type:'error',message:'电话必须为11位数字！'})
-                            return
-                        }
                         this.$emit('confirm',this.deployForm)
                         this.deploying=true
                     }else {
