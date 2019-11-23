@@ -98,9 +98,10 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  // console.log(to, from, localStorage.getItem('token'))
   if (to.meta.auth && !localStorage.getItem('token')) {
     router.replace({name: 'Login'})
+    window.location.reload()
+    return false
   }
   next()
 })
