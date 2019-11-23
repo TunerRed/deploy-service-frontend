@@ -1,7 +1,4 @@
-import state_code from "../code";
 import https from '@/utils/axios'
-
-require('../code.js')
 
 const BASE_URL = '/frontend'
 

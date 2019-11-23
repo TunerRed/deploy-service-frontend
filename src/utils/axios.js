@@ -6,26 +6,35 @@ const service = axios.create({
   baseURL: '/api',
   timeout: 10000
 })
+const max_err_len = 10
 
-// todo 登录验证等 cookies还有错误，需要学习一个
-// service.interceptors.request.use((config) => {
-//     const token = cookies.get('token')
-//     config.headers.Authorization = token
-//     return config
-//   },
-//   error => {
-//     console.log(error)
-//     Promise.reject(error)
-//   }
-// )
+service.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers.Authorization = token
+    }
+    return config
+  },
+  error => {
+    message.createError('请求错误')
+    Promise.reject(error)
+  }
+)
 
 service.interceptors.response.use((res) =>{
   const dataAxios = res.data;
-  if (dataAxios.resultCode == state_code.SUCCESS)
+  if (dataAxios.resultCode === state_code.SUCCESS)
     return Promise.resolve(dataAxios);
+  else if (dataAxios.resultCode === state_code.USER_LOGIN_FAILURE) {
+    message.createInfo(dataAxios.resultMsg)
+    localStorage.removeItem('token')
+    window.location.reload()
+    return Promise.reject(dataAxios.resultMsg);
+  }
   else {
-    message.createError(dataAxios.resultCode+" "+dataAxios.resultMsg)
-    return Promise.reject(error);
+    const msg = dataAxios.resultMsg
+    message.createError(msg.length>max_err_len?msg.slice(0,max_err_len)+'...':msg)
+    return Promise.reject(dataAxios.resultMsg);
   }
 }, (error) => {
   message.createError('网络异常')

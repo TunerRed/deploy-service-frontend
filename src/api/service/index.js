@@ -1,7 +1,5 @@
-import state_code from "../code";
 import https from '@/utils/axios'
-
-require('../code.js')
+import state_code from '../code'
 
 const BASE_URL = '/service'
 
