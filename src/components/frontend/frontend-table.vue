@@ -12,7 +12,7 @@
     <el-table-column prop="repo" label="仓库" min-width="300"></el-table-column>
     <el-table-column prop="branchList" label="分支" min-width="200">
       <template slot-scope="scope">
-        <el-select v-model="scope.row.branch">
+        <el-select v-model="scope.row.branch" @change="setAvailNpmScript(scope.row)">
           <el-option v-for="(item,index) in scope.row.branchList" :key="index" :label="item" :value="item"></el-option>
         </el-select>
       </template>
@@ -48,6 +48,11 @@
                 let data = await this.$api.frontend.getFrontendRepoList()
                 this.tableData = data.resultData.repoList
                 console.log(this.tableData)
+            },
+            async setAvailNpmScript (row) {
+                console.log(row.repo,row.branch)
+                const data = await this.$api.frontend.getAvailNpmScript(row.repo,row.branch)
+                row.scriptList=data.resultData
             }
         }
     }

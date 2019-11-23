@@ -14,5 +14,9 @@ export default {
   },
   deployFromGit(serverIP,phone,deployList) {
     return https.Post(BASE_URL+'/deployFromGit',{serverIP,phone,deployList})
+    //return https.Post(BASE_URL+'/deployFromGit',{serverIP,phone,deployList: JSON.stringify(deployList)})
   },
+  getAvailNpmScript(repo,branch) {
+    return https.Get(BASE_URL+'/getNpmScripts',{repo,branch})
+  }
 }

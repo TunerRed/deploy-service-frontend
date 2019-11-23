@@ -4,7 +4,7 @@
     <el-divider><i class="el-icon-menu"></i></el-divider>
     <pack-table ref="table"></pack-table>
     <el-divider><i class="el-icon-s-promotion"></i></el-divider>
-    <deploy-start-form ref="start" :ip-list="ipList" @confirm="onDeployServices"></deploy-start-form>
+    <deploy-start-form ref="start" :ip-list="ipList" @confirm="onDeployFrontend"></deploy-start-form>
   </div>
 </template>
 
@@ -24,14 +24,14 @@
         },
         methods: {
             // todo 检查URL是否有效
-            onDeployServices(deployForm) {
+            onDeployFrontend(deployForm) {
                 let data = this.$refs.table.tableData
                 console.log(data)
                 let deployList=[]
                 for(let i=0;i<data.length;i++){
                     if (data[i].deploy) {
                         deployList.push({repo:data[i].repo,branch:data[i].branch,filename:data[i].filename,script:data[i].script})
-                        console.log(deployList[i])
+                        //console.log(deployList[i])
                     }
                 }
                 this.$api.frontend.deployFromGit(deployForm.serverIP, deployForm.phoneNumber,deployList)

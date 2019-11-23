@@ -4,7 +4,7 @@ import message from '@/api/showMsg'
 
 const service = axios.create({
   baseURL: '/api',
-  timeout: 3000
+  timeout: 10000
 })
 
 // todo 登录验证等 cookies还有错误，需要学习一个
@@ -33,11 +33,14 @@ service.interceptors.response.use((res) =>{
 });
 
 //返回一个Promise(发送post请求)
-function Post(url, params) {
+function Post(url, data) {
   return service({
     method: "post",
     url,
-    params
+    data
+    // headers: {
+    //   contentType: "application/json"
+    // }
   });
 }
 
