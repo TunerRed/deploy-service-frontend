@@ -1,6 +1,6 @@
 # deploy-service-frontend
 
-# run-shell
+## run-shell
 
 > vue学习入门，调用后端springboot运行服务器脚本部署前端或后台服务
 
@@ -22,9 +22,11 @@ npm run build --report
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
+## commit log
 ---
-界面主体完成
-简单学习echarts，估计不会用得上
+1. 界面主体完成
+2. 简单学习echarts，估计不会用得上
+
 ---
 - 2019.11.13
 基本实现从git部署前端（接口与postman）
@@ -41,4 +43,12 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 post发送对象信息，参数在body中，在请求中为'data'
 get发送参数信息，参数在Params中，在请求中为'params'
 ```
+<<<<<<< HEAD
 4. 原本使用了JSON.stringify，但后来发现并不需要，修改为放在body中就可以了（应该在何处使用？）
+=======
+4. 原本使用了JSON.stringify，但后来发现并不需要，修改为放在body中就可以了（应该在何处使用？）
+1. 基本实现从git部署前端
+2. 前端api
+
+想给自己写个静态网站！
+>>>>>>> ef3da966520569acdc3ad1b49b8b07c2e018dcad
