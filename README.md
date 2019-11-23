@@ -29,6 +29,21 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ---
 - 2019.11.13
+基本实现从git部署前端（接口与postman）
+前端api
+
+想给自己写个静态网站！
+
+---
+- 2019.11.14
+1. 获取当前分支下的打包脚本（前端专用）
+2. 调整超时时间
+3. 正确使用post和get（data和param）发送请求，跑通部署git前端的整个图形化流程
+```
+post发送对象信息，参数在body中，在请求中为'data'
+get发送参数信息，参数在Params中，在请求中为'params'
+```
+4. 原本使用了JSON.stringify，但后来发现并不需要，修改为放在body中就可以了（应该在何处使用？）
 1. 基本实现从git部署前端
 2. 前端api
 
