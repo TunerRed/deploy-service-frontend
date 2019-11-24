@@ -4,7 +4,7 @@ import message from '@/api/showMsg'
 
 const service = axios.create({
   baseURL: '/api',
-  timeout: 10000
+  timeout: 30000
 })
 const max_err_len = 10
 

@@ -3,7 +3,10 @@
     <el-container>
       <el-header class="header">
         <el-row style="margin-top: 15px;">
-          <el-col :span="3" :offset="20">
+          <el-col :span="2" :offset="1">
+            <el-button icon="el-icon-s-home" size="medium" type="warning" plain @click="()=>{this.$router.push('/')}">首页</el-button>
+          </el-col>
+          <el-col :span="3" :offset="17">
             <el-button v-if="!isLogin" size="small" type="primary" @click="onLoginClick" style="width: 100%;" round>登录</el-button>
             <el-tag v-if="isLogin" size="small" type="success" style="width: 100%;">欢迎，{{username}}</el-tag>
           </el-col>
@@ -53,7 +56,6 @@ export default {
   color: #2c3e50;
   /*margin-top: 60px;*/
 }
-
 .header,.footer {
   background-color: bisque;
   height: 50px;

@@ -9,8 +9,8 @@ export default {
   getServerList () {
     return https.Post(BASE_URL+'/getServerList');
   },
-  deployFromGit(serverIP,phone,deployList) {
-    return https.Post(BASE_URL+'/deployFromGit',{serverIP,phone,deployList})
+  deployFromGit(serverIP,deployList) {
+    return https.Post(BASE_URL+'/deployFromGit',{serverIP,deployList})
     //return https.Post(BASE_URL+'/deployFromGit',{serverIP,phone,deployList: JSON.stringify(deployList)})
   },
   getAvailNpmScript(repo,branch) {

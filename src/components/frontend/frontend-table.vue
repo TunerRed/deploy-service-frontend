@@ -3,6 +3,7 @@
     :data="tableData"
     style="width: 100%"
     border
+    v-loading="loadingData"
   >
     <el-table-column label="是否勾选" width="100">
       <template slot-scope="scope">
@@ -37,7 +38,8 @@
         name: "frontend-table",
         data() {
             return {
-                tableData: []
+                tableData: [],
+                loadingData: true
             }
         },
         mounted() {
@@ -45,14 +47,18 @@
         },
         methods: {
             async getTableData() {
+                this.loadingData = true;
                 let data = await this.$api.frontend.getFrontendRepoList()
                 this.tableData = data.resultData.repoList
-                console.log(this.tableData)
+                this.loadingData = false
+                // console.log(this.tableData)
             },
             async setAvailNpmScript (row) {
-                console.log(row.repo,row.branch)
+                // console.log(row.repo,row.branch)
+                this.loadingData = true
                 const data = await this.$api.frontend.getAvailNpmScript(row.repo,row.branch)
                 row.scriptList=data.resultData
+                this.loadingData = false
             }
         }
     }

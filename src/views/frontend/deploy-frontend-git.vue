@@ -23,19 +23,34 @@
             this.getServerList()
         },
         methods: {
-            // todo 检查URL是否有效
-            onDeployFrontend(deployForm) {
+            async onDeployFrontend(deployForm) {
                 let data = this.$refs.table.tableData
-                console.log(data)
-                let deployList=[]
-                for(let i=0;i<data.length;i++){
-                    if (data[i].deploy) {
-                        deployList.push({repo:data[i].repo,branch:data[i].branch,filename:data[i].filename,script:data[i].script})
-                        //console.log(deployList[i])
+                // console.log(data)
+                let error = null
+                let deployList=data.map((item)=>{
+                    if (item && item.deploy) {
+                        if (item.repo && item.branch && item.filename && item.script)
+                          return {repo:item.repo,branch:item.branch,filename:item.filename,script:item.script}
+                        else {
+                            error = '部署列表存在空项，请检查'
+                        }
                     }
+                })
+                deployList = deployList.filter(d=>d)
+                if (error) {
+                    this.$message.error(error)
+                    this.$refs.start.resetDeploy(false)
+                    return
                 }
-                this.$api.frontend.deployFromGit(deployForm.serverIP, deployForm.phoneNumber,deployList)
-                this.$message({type:'success',message:'已开始部署,请等待完成'})
+                if (!deployList || deployList.length == 0) {
+                    this.$message.warning('请选择至少一项')
+                    this.$refs.start.resetDeploy(false)
+                    return
+                } else {
+                    await this.$api.frontend.deployFromGit(deployForm.serverIP, deployList)
+                    this.$message({type:'success',message:'已开始部署,请等待完成'})
+                    this.$refs.start.resetDeploy(true)
+                }
             },
             async getServerList () {
                 const data= await this.$api.frontend.getServerList()

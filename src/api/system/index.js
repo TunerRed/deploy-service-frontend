@@ -3,9 +3,17 @@ import https from '@/utils/axios'
 require('../code.js')
 
 export default {
-  async userLogin(username, password) {
+  userLogin(username, password) {
     // console.log('user login: ',username,password)
-    const data = await https.Get('/login',{username, password})
-    return data
+    const enc = window.btoa(password)
+    console.log("加密",enc)
+    return https.Get('/login',{username, password: enc})
+  },
+  getCommonMessage() {
+    return https.Get('/common/message-list')
+  },
+  // @param messageId: integer
+  updateReadMessage(messageId) {
+    return https.Get('/system/read-message',{messageId})
   }
 }
