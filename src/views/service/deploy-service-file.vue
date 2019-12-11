@@ -36,19 +36,9 @@
                     this.ipList = data.resultData.list
                 }
             },
-            onDeployServices(deployForm) {
-                //todo 文件上传接口
-                this.$refs.uploader.uploadFileTo(deployForm.serverIP + '')
-                this.$api.service.deployFromFile(deployForm.serverIP, deployForm.phoneNumber)
+            async onDeployServices(deployForm) {
+                await this.$api.service.deployFromFile(deployForm.serverIP)
                 this.$message({type:'success',message:'已开始部署,请等待完成'})
-                // this.$refs["deployForm"].validate((valid) => {
-                //     if (valid) {
-                //         alert("success");
-                //     }else {
-                //         alert("error")
-                //         return false
-                //     }
-                // })
             },
         }
     }

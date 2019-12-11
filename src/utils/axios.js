@@ -29,8 +29,10 @@ service.interceptors.response.use((res) =>{
     message.createInfo(dataAxios.resultMsg)
     localStorage.removeItem('token')
     return Promise.reject(dataAxios.resultMsg);
-  }
-  else {
+  } else if (dataAxios.resultCode === state_code.FILE_EXCEED){
+    alert('文件上传错误！'+dataAxios.resultMsg)
+    return Promise.resolve(dataAxios);
+  } else {
     const msg = dataAxios.resultMsg
     if(msg) {
       message.createError(msg.length>max_err_len?msg.slice(0,max_err_len)+'...':msg)

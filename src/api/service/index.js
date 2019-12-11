@@ -77,11 +77,8 @@ export default {
       resultCode: state_code.SUCCESS
     }
   },
-  deployFromFile(url,phone) {
-    console.log(url,phone)
-    return {
-      resultCode: state_code.SUCCESS
-    }
+  deployFromFile(serverIP) {
+    return https.Post(BASE_URL+'/deployServiceFromFile', {serverIP});
   },
 
   getAvailableServerList() {
@@ -89,7 +86,7 @@ export default {
   },
 
   getAvailPack(serverIP) {
-    return https.Post(BASE_URL+'/getAvailBackup', {"serverIP": serverIP});
+    return https.Post(BASE_URL+'/getAvailBackup', {serverIP});
   },
 
   uploadFiles(url,data) {
