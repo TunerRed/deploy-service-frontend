@@ -9,15 +9,14 @@
       <el-table
         :data="tableData"
         border
-        style="width: fit-content;height: fit-content;"
         v-loading="loading"
       >
-        <el-table-column label="应用" prop="name" width="150" fixed="left"></el-table-column>
-        <el-table-column label="JAR包" prop="jar" width="150"></el-table-column>
-        <el-table-column label="端口" prop="port" width="100"></el-table-column>
-        <el-table-column label="运行时间" prop="runTime" width="100"></el-table-column>
-        <el-table-column label="actuator" prop="actuator" width="500"></el-table-column>
-        <el-table-column label="操作" width="80" fixed="right">
+        <el-table-column label="应用" prop="name" min-width="150" fixed="left"></el-table-column>
+        <el-table-column label="JAR包" prop="jar" min-width="150"></el-table-column>
+        <el-table-column label="端口" prop="port" min-width="100"></el-table-column>
+        <el-table-column label="运行时间" prop="runTime" min-width="100"></el-table-column>
+        <el-table-column label="actuator" prop="actuator" min-width="500"></el-table-column>
+        <el-table-column label="操作" min-width="80" fixed="right">
           <template slot-scope="scoped">
             <!-- 操作按钮 -->
             <el-button v-if="!scoped.row.started" type="primary" size="small">启动</el-button>
@@ -39,25 +38,28 @@
                 loading: true
             }
         },
-        created() {
-            this.loading = true
-            this.serverIPList = this.$api.service.getAvailableServerList().resultData.list
-            if (this.serverIPList.length > 0){
-                this.serverIP = this.serverIPList[0]
-                this.onSearch()
-            }
-            this.loading = false
+        mounted() {
+            // this.initData()
+            this.onSearch('')
         },
         methods: {
-          onSearch() {
-              this.loading = true
-              let result = this.$api.service.getEurekaList(this.serverIP)
-              setTimeout(()=>{
-                  this.loading = false;
-                  this.$message({message: '查询完成',type: 'success'});
-              },1000)
-              this.tableData = result.resultData.list
-          }
+            async initData() {
+                this.loading = true
+                const data = await this.$api.service.getAvailableServerList()
+                this.serverIPList = data.resultData.list
+                if (this.serverIPList.length > 0){
+                    this.serverIP = this.serverIPList[0]
+                    this.onSearch(this.serverIP)
+                }
+                this.loading = false
+            },
+            async onSearch(serverIP) {
+                this.loading = true
+                let result = await this.$api.service.getEurekaList(serverIP)
+                this.loading = false;
+                this.tableData = result.resultData.list
+                this.$message({message: '查询完成',type: 'success'});
+            }
         }
     }
 </script>

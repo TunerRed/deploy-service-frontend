@@ -78,7 +78,7 @@ export default {
     }
   },
   deployFromFile(serverIP) {
-    return https.Post(BASE_URL+'/deployServiceFromFile', {serverIP});
+    return https.Get(BASE_URL+'/deployServiceFromFile', {serverIP});
   },
 
   getAvailableServerList() {
