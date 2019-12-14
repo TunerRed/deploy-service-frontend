@@ -30,9 +30,13 @@ export default {
         }
     },
     mounted() {
-        this.tableData = this.$api.service.getServicesInfo().resultData.list
+        this.initData()
     },
     methods: {
+        async initData() {
+            const data = await this.$api.service.getServiceList();
+            this.tableData = data.resultData.list
+        }
     }
 }
 </script>

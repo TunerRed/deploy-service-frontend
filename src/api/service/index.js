@@ -4,62 +4,14 @@ import state_code from '../code'
 const BASE_URL = '/service'
 
 export default {
+  // 获取指定服务器的运行列表
   getEurekaList(serverIP) {
-    return {
-      resultCode: state_code.SUCCESS,
-      resultMessage: '',
-      resultData: {
-        list: [
-          {
-            name: 'test',
-            jar: '乌拉-test-1031.jar',
-            //确认应用有使用actuator
-            version: '1121',
-            port: '1234',
-            started: true,
-            actuator: '',
-            runTime: '1031'
-          },
-          {
-            name: 'sso',
-            jar: '乌拉-sso-1031.jar',
-            //确认应用有使用actuator
-            version: 'release-0815',
-            port: '9966',
-            started: false,
-            actuator: 'UP',
-            runTime: '1031'
-          },
-          {
-            name: 'system-db',
-            jar: '乌拉-db-1031.jar',
-            //确认应用有使用actuator
-            version: 'release-1015',
-            port: '1024',
-            started: true,
-            actuator: 'DOWN',
-            runTime: '1031'
-          }
-        ]
-      }
-    }
+    return https.Get(BASE_URL+'/getEurekaList', {serverIP})
   },
+
+  // 获取可进行maven打包的仓库列表
   getServiceList() {
-    return axios({
-      method: 'get',
-      url: '/service/queryList',
-    })
-  },
-  rollback(url,filename,phoneNumber) {
-    return {
-      resultCode: state_code.SUCCESS
-    }
-    // return axios({
-    //   method: 'get',
-    //   url: '/service/queryList',
-    // })
-  },
-  getServicesInfo() {
+    // return https.Get(BASE_URL+'/queryList')
     return {
       resultCode: state_code.SUCCESS,
       resultData: {
@@ -71,22 +23,39 @@ export default {
       }
     }
   },
+
+  // 获取可部署后端的服务器列表
+  getAvailableServerList() {
+    return https.Get(BASE_URL+'/getServerList')
+  },
+
+  // 回滚后端？
+  rollback(url,filename,phoneNumber) {
+    return {
+      resultCode: state_code.SUCCESS
+    }
+    // return axios({
+    //   method: 'get',
+    //   url: '/service/queryList',
+    // })
+  },
+
+  // 获取可用的回滚包
+  getBackupPack(serverIP) {
+    return https.Post(BASE_URL+'/getAvailBackup', {serverIP});
+  },
+
+  // 从git部署后端
   deployFromGit(url,phone,deployList) {
     console.log(url,phone,deployList)
     return {
       resultCode: state_code.SUCCESS
     }
   },
+
+  // 先上传文件，之后执行该方法。从文件部署后端
   deployFromFile(serverIP) {
     return https.Get(BASE_URL+'/deployServiceFromFile', {serverIP});
-  },
-
-  getAvailableServerList() {
-    return https.Get(BASE_URL+'/getServerList')
-  },
-
-  getAvailPack(serverIP) {
-    return https.Post(BASE_URL+'/getAvailBackup', {serverIP});
   },
 
   uploadFiles(url,data) {

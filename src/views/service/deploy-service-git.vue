@@ -19,7 +19,7 @@
             ipList: ''
           }
         },
-        created() {
+        mounted() {
             //this.$api.show.createError('i am error')
             this.ipList=this.$api.service.getAvailableServerList().resultData.list
         },
