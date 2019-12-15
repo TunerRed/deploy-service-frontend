@@ -6,10 +6,10 @@
           <el-col :span="2" :offset="1">
             <el-button icon="el-icon-s-home" size="medium" type="warning" plain @click="()=>{this.$router.push('/')}">首页</el-button>
           </el-col>
-          <el-col :span="3" :offset="17">
-            <el-button v-if="!isLogin" size="small" type="primary" @click="onLoginClick" style="width: 100%;" round>登录</el-button>
-            <el-tag v-if="isLogin" size="small" type="success" style="width: 55%;">欢迎，{{username}}</el-tag>
-            <el-button v-if="isLogin" size="mini" type="info" @click="()=>{this.$router.replace({name: 'Login'})}" style="width: 35%;margin-left: 5%;" round>重新登录</el-button>
+          <el-col :span="4" :offset="17">
+            <el-button v-if="!isLogin" size="small" type="primary" @click="onLoginClick" style="min-width: 80px;width: 100%;" round>登录</el-button>
+            <el-tag v-if="isLogin" size="small" type="success" style="width: 120px;min-width: 80px;">欢迎，{{username}}</el-tag>
+            <el-button v-if="isLogin" size="mini" type="info" @click="()=>{this.$router.replace({name: 'Login'})}" style="min-width: 80px;width: 25%;margin-left: 10px;" round>重新登录</el-button>
           </el-col>
         </el-row>
       </el-header>
@@ -56,19 +56,27 @@ export default {
   text-align: center;
   color: #2c3e50;
   background-color: ghostwhite;
-  min-width: 1300px;
   min-height: 95%;
   margin: 0;
 }
 #parent {
   min-height: 800px;
 }
-.header,.footer {
+.header,
+.footer {
   background-color: deepskyblue;
   height: 50px;
 }
 #menu-col {
   background-color: #545c64;
+}
+/*修改全局table表头高度，需要添加class为table-header*/
+.table-header .el-table__header th {
+  padding: 0;
+  height: 40px;
+}
+.table-header_color  .el-table__header th {
+  background-color: #eefffa;
 }
 </style>
 

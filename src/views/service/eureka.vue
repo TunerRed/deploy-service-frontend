@@ -1,30 +1,37 @@
 <template>
     <div>
-      <el-row>
+      <el-row style="padding-bottom: 15px;">
         <el-select size="small" v-model="serverIP">
           <el-option v-for="(serverIP, index) in serverIPList" :key="index" :label="serverIP" :value="serverIP"></el-option>
         </el-select>
         <el-button type="primary" size="small" @click="onSearch">查询</el-button>
       </el-row>
       <el-table
-        :data="tableData"
+        :data="tableData.filter(item => !search || (item.jar && item.jar.toLowerCase().includes(search.toLowerCase())))"
         border
         height="500"
-        style="width: 100%"
+        class="table-header table-header_color"
         v-loading="loading"
       >
-        <el-table-column label="应用" prop="name" min-width="100" align="center" fixed="left"></el-table-column>
-        <el-table-column label="JAR包" prop="jar" min-width="180" align="center"></el-table-column>
-        <el-table-column label="进程" prop="pid" min-width="90" align="center"></el-table-column>
+        <el-table-column label="应用" prop="name" min-width="150" align="center" fixed="left"></el-table-column>
+        <el-table-column label="JAR文件" prop="jar" min-width="220" align="center"></el-table-column>
+        <el-table-column label="进程" prop="pid" min-width="70" align="center"></el-table-column>
         <el-table-column label="端口" prop="port" min-width="70" align="center"></el-table-column>
-        <el-table-column label="内存占用" prop="mem" min-width="80" align="center"></el-table-column>
-        <el-table-column label="启动时间" prop="startTime" min-width="100" align="center"></el-table-column>
-        <el-table-column label="actuator" prop="actuator" min-width="500" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="80" align="center" fixed="right">
+        <el-table-column label="内存占用" prop="mem" min-width="85" align="center"></el-table-column>
+        <el-table-column label="启动时间" prop="startTime" min-width="85" align="center"></el-table-column>
+        <el-table-column label="actuator" prop="actuator" min-width="400" align="center">
+          <template slot-scope="scoped">
+            <el-tooltip :content="scoped.row.actuator" :disabled="!scoped.row.actuator || scoped.row.actuator.length <= maxActuatorLength">
+              <span>{{(scoped.row.actuator && scoped.row.actuator.length > maxActuatorLength)?scoped.row.actuator.slice(0,maxActuatorLength)+'..':scoped.row.actuator}}</span>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" min-width="140" align="center" fixed="right">
+          <template slot="header" slot-scope="scoped"><el-input v-model="search" size="mini" clearable placeholder="筛选jar" style="margin-top: 7px;padding: 0;"></el-input></template>
           <template slot-scope="scoped">
             <!-- 操作按钮 -->
-            <el-button v-if="!scoped.row.pid" type="primary" size="small">启动</el-button>
-            <el-button v-if="scoped.row.pid" type="danger" size="small">停止</el-button>
+            <el-button v-if="scoped.row.pid<=0" type="primary" size="small" @click="onOperation('start', scoped.row)" :disabled="btnStartDisabled(scoped.row)">启动</el-button>
+            <el-button v-if="scoped.row.pid>0" type="danger" size="small" @click="onOperation('stop', scoped.row)" :disabled="btnStopDisabled(scoped.row)">停止</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -39,7 +46,9 @@
                 serverIPList: [],
                 tableData: [],
                 serverIP: '',
-                loading: true
+                loading: true,
+                maxActuatorLength: 60,
+                search: ''
             }
         },
         mounted() {
@@ -60,15 +69,30 @@
                 let result = await this.$api.service.getEurekaList(this.serverIP)
                 this.loading = false;
                 this.tableData = result.resultData.list
-                console.log('getEurekaList', this.tableData)
                 this.$message({message: '查询完成',type: 'success'});
+            },
+            async onOperation(val, row) {
+                if (val === 'stop') {
+                    await this.$api.service.stopService(this.serverIP, row.name, row.pid)
+                    this.$message.warning('service done')
+                    row.pid = 0
+                } else if (val === 'start') {
+                    row.pid=-1
+                    await this.$api.service.startService(this.serverIP, row.name)
+                    this.$message.success('服务启动中，请稍后刷新列表或在首页查看')
+                }
+            },
+            btnStartDisabled(row) {
+                return row.pid === -1
+                // return (row.disableStart != null && row.disableStart)
+            },
+            btnStopDisabled(row) {
+                return row.pid === 0
+                // return (row.disableStop != null && row.disableStop)
             }
         }
     }
 </script>
 
 <style scoped>
-  .el-row {
-  padding-bottom: 15px;
-  }
 </style>

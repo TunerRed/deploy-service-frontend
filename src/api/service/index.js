@@ -45,6 +45,15 @@ export default {
     return https.Post(BASE_URL+'/getAvailBackup', {serverIP});
   },
 
+  // 停止远程服务器上的服务
+  stopService(serverIP, filename, pid) {
+    return https.Get(BASE_URL+'/stop', {serverIP, filename, pid})
+  },
+  // 启动远程服务器上的服务
+  startService(serverIP, filename) {
+    return https.Get(BASE_URL+'/start', {serverIP, filename})
+  },
+
   // 从git部署后端
   deployFromGit(url,phone,deployList) {
     console.log(url,phone,deployList)

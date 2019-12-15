@@ -12,6 +12,9 @@ export default {
   getCommonMessage() {
     return https.Get('/common/message-list')
   },
+  getStatistic() {
+    return https.Get('/common/statistic')
+  },
   // @param messageId: integer
   updateReadMessage(messageId) {
     return https.Get('/system/read-message',{messageId})

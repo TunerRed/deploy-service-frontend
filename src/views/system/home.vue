@@ -5,14 +5,18 @@
         <hr size="4" color="green">
       </div>
       <el-row class="home-container">
-        <el-col class="home-banner" :span="12" :offset="1">
-          <el-carousel height="400px">
-            <el-carousel-item v-for="item in 3" :key="item">
-              <el-image fit="fill" :src="'./static/banner/banner'+item+'.png'"></el-image>
-            </el-carousel-item>
-          </el-carousel>
+        <el-col class="home-statistic" :span="14" :offset="1">
+          <statistic></statistic>
         </el-col>
-        <el-col class="home-message" :span="8" :offset="2">
+        <el-col class="home-message" :span="8" :offset="1">
+          <div class="banner-wrapper">
+            <el-carousel height="200">
+              <el-carousel-item v-for="item in 3" :key="item">
+                <el-image fit="fill" :src="'./static/banner/banner'+item+'.png'"></el-image>
+              </el-carousel-item>
+            </el-carousel>
+          </div>
+          <el-divider></el-divider>
           <el-card>
             <div>
               <el-row>
@@ -46,8 +50,10 @@
 </template>
 
 <script>
+    import Statistic from "../../components/home/statistic";
     export default {
         name: "home",
+        components: {Statistic},
         data() {
             return {
                 newMessageCount: 1,
@@ -106,14 +112,22 @@
 .home-container {
   padding-bottom: 50px;
 }
+home-statistic {
+  text-align: center;
+  vertical-align: middle;
+}
 .home-message {
   padding-bottom: 10px;
 }
-  .message-title {
-    font-size: 14px;
-    font-weight: bold;
-  }
-  .message-content {
-    margin-bottom: 5px;
-  }
+.banner-wrapper {
+  min-width: 500px;
+  height: 200px;
+}
+.message-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+.message-content {
+  margin-bottom: 5px;
+}
 </style>
