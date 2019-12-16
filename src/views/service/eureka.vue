@@ -17,7 +17,10 @@
       >
         <el-table-column label="应用" prop="name" min-width="150" align="center" fixed="left"></el-table-column>
         <el-table-column label="JAR文件" prop="jar" min-width="220" align="center">
-          <template slot="header" slot-scope="scoped"><span>文件 </span><el-input v-model="search" size="mini" clearable placeholder="筛选jar" style="margin-top: 7px;padding: 0;width: 80%;"></el-input></template>
+          <template slot="header" slot-scope="scoped">
+            <span>文件</span>
+            <el-input v-model="search" size="mini" clearable placeholder="筛选文件" style="margin-top: 7px;margin-left: 5px;padding: 0;width: 85%;"></el-input>
+          </template>
         </el-table-column>
         <el-table-column label="进程" prop="pid" min-width="70" align="center"></el-table-column>
         <el-table-column label="端口" prop="port" min-width="70" align="center"></el-table-column>

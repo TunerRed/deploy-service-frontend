@@ -20,8 +20,7 @@
           }
         },
         mounted() {
-            //this.$api.show.createError('i am error')
-            this.ipList=this.$api.service.getAvailableServerList().resultData.list
+            this.ipList=this.$api.service.getServerList().resultData.list
         },
         methods: {
             onDeployServices(deployForm) {

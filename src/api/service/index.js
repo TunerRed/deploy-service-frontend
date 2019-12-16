@@ -25,7 +25,7 @@ export default {
   },
 
   // 获取可部署后端的服务器列表
-  getAvailableServerList() {
+  getServerList() {
     return https.Get(BASE_URL+'/getServerList')
   },
 
