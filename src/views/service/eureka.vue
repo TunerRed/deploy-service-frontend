@@ -63,7 +63,7 @@
         methods: {
             async initData() {
                 this.loading = true;
-                const data = await this.$api.service.getAvailableServerList();
+                const data = await this.$api.service.getServerList();
                 this.loading = false;
                 this.serverIPList = data.resultData.list;
                 if (this.serverIPList.length > 0){

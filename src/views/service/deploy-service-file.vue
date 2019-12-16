@@ -31,7 +31,7 @@
         },
         methods: {
             async initData() {
-                const data = await this.$api.service.getAvailableServerList()
+                const data = await this.$api.service.getServerList()
                 if (data) {
                     this.ipList = data.resultData.list
                 }
