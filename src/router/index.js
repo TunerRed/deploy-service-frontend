@@ -12,6 +12,8 @@ import FrontGit from '@/views/frontend/deploy-frontend-git'
 import Config from '@/views/system/config'
 import Login from '@/views/system/login'
 
+import Error from '@/views/system/error'
+
 Vue.use(Router)
 
 const BASE_URL_SERVICE = '/service'
@@ -94,6 +96,14 @@ let router = new Router({
       component: Config,
       meta: {
         ...meta
+      }
+    },
+    {
+      path: '/error',
+      name: '404',
+      component: Error,
+      meta: {
+        auth: false
       }
     }
   ]

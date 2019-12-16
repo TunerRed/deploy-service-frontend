@@ -30,7 +30,6 @@ service.interceptors.response.use((res) =>{
     localStorage.removeItem('token')
     return Promise.reject(dataAxios.resultMsg);
   } else if (dataAxios.resultCode === state_code.FILE_EXCEED){
-    alert('文件上传错误！'+dataAxios.resultMsg)
     return Promise.resolve(dataAxios);
   } else {
     const msg = dataAxios.resultMsg

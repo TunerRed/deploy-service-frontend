@@ -12,7 +12,8 @@
         <template slot="title"><i class="el-icon-location"></i><span>后端</span></template>
         <el-submenu index="1-1">
           <template slot="title">部署</template>
-          <el-menu-item index="/service/deploy/git">从Git</el-menu-item>
+<!--          <el-menu-item index="/service/deploy/git">从Git</el-menu-item>-->
+          <el-menu-item index="/error">从Git（弃坑中）</el-menu-item>
           <el-menu-item index="/service/deploy/file">从文件</el-menu-item>
         </el-submenu>
         <el-menu-item index="/service/eureka">EUREKA</el-menu-item>
@@ -22,7 +23,8 @@
         <el-menu-item index="/frontend/deploy">部署</el-menu-item>
         <el-menu-item index="/frontend/rollback">回滚</el-menu-item>
       </el-submenu>
-      <el-menu-item index="/system/config" ><i class="el-icon-setting"></i>我的配置</el-menu-item>
+<!--      <el-menu-item index="/system/config" ><i class="el-icon-setting"></i>我的配置</el-menu-item>-->
+      <el-menu-item index="/error" ><i class="el-icon-setting"></i>我的配置（弃坑中）</el-menu-item>
     </el-menu>
   </el-col>
 </template>
