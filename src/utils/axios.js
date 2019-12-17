@@ -23,7 +23,7 @@ service.interceptors.request.use((config) => {
 
 service.interceptors.response.use((res) =>{
   const dataAxios = res.data;
-  if (dataAxios.resultCode === state_code.SUCCESS)
+  if (dataAxios.resultCode === undefined || dataAxios.resultCode === state_code.SUCCESS)
     return Promise.resolve(dataAxios);
   else if (dataAxios.resultCode === state_code.USER_LOGIN_FAILURE) {
     message.createInfo(dataAxios.resultMsg)
@@ -52,9 +52,6 @@ function Post(url, data) {
     method: "post",
     url,
     data
-    // headers: {
-    //   contentType: "application/json"
-    // }
   });
 }
 
@@ -77,8 +74,18 @@ function Upload(url, data) {
   })
 }
 
+function Download(url, params) {
+  return service({
+    method: "get",
+    url,
+    params,
+    responseType: 'blob'
+  });
+}
+
 export default {
   Get,
   Post,
-  Upload
+  Upload,
+  Download
 }

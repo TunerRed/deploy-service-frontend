@@ -29,15 +29,8 @@ export default {
     return https.Get(BASE_URL+'/getServerList')
   },
 
-  // 回滚后端？
-  rollback(url,filename,phoneNumber) {
-    return {
-      resultCode: state_code.SUCCESS
-    }
-    // return axios({
-    //   method: 'get',
-    //   url: '/service/queryList',
-    // })
+  download(serverIP, filename) {
+    return https.Download(BASE_URL+'/download', {serverIP, filename})
   },
 
   // 获取可用的回滚包

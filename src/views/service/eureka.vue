@@ -38,6 +38,7 @@
             <!-- 操作按钮 -->
             <el-button v-if="scoped.row.pid<=0" type="primary" size="small" @click="onOperation('start', scoped.row)" :disabled="btnStartDisabled(scoped.row)">启动</el-button>
             <el-button v-if="scoped.row.pid>0" type="danger" size="small" @click="onOperation('stop', scoped.row)" :disabled="btnStopDisabled(scoped.row)">停止</el-button>
+            <el-button type="success" size="small" @click="downLoad(scoped.row.jar)">下载</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -87,6 +88,25 @@
                     await this.$api.service.startService(this.serverIP, row.name);
                     this.$message.success('服务启动中，请稍后刷新列表或在首页查看')
                 }
+            },
+            async downLoad(filename) {
+                if (!filename) {
+                    this.$message.error("空文件名，无法下载")
+                    return
+                }
+                console.log("download", this.serverIP, filename)
+                this.$api.service.download(this.serverIP, filename).then(res=>{
+                    let blob = new Blob([res],{type: '.jar'});
+                    if (window.navigator.msSaveOrOpenBlob) {
+                        window.navigator.msSaveOrOpenBlob(blob, filename)
+                    } else {
+                        let objURL = URL.createObjectURL(blob)
+                        let a = document.createElement('a')
+                        a.href = objURL
+                        a.download = filename
+                        a.click()
+                    }
+                })
             },
             btnStartDisabled(row) {
                 return row.pid === -1
