@@ -95,7 +95,7 @@ let router = new Router({
       name: 'Config',
       component: Config,
       meta: {
-        ...meta
+        auth: false
       }
     },
     {

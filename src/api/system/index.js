@@ -18,5 +18,8 @@ export default {
   // @param messageId: integer
   updateReadMessage(messageId) {
     return https.Get('/system/read-message',{messageId})
+  },
+  addUser(form) {
+    return https.Post('/system/addUser', {form})
   }
 }
