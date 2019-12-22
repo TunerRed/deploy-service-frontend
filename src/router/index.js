@@ -103,7 +103,7 @@ let router = new Router({
       name: '404',
       component: Error,
       meta: {
-        auth: false
+        ...meta
       }
     }
   ]
