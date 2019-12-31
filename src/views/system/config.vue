@@ -62,7 +62,7 @@
             <el-form-item label="用户名" prop="username" required><el-input size="mini" v-model="addServerData.username" maxlength="10"></el-input></el-form-item>
             <el-form-item label="密码" prop="password" required><el-input size="mini" type="password" v-model="addServerData.password" maxlength="20"></el-input></el-form-item>
             <el-form-item label="主机类型" prop="type" required>
-              <el-select size="mini" v-model="addServerData.type" placeholder="请选择主机类型" style="float: left">
+              <el-select size="mini" v-model="addServerData.type" placeholder="请选择主机类型" style="float: left" :disabled="tabServerData.update">
                 <el-option label="部署前端" value="FRONTEND"></el-option>
                 <el-option label="部署后端" value="SERVICE"></el-option>
               </el-select>
@@ -295,6 +295,7 @@
                     if (valid) {
                         this.tabServerData.dialogVisible = false;
                         const data = await this.$api.system.updateServer(this.addServerData, this.tabServerData.update)
+                        this.$message.success('更新成功')
                         if (data) {
                             this.initServer()
                         }
@@ -308,6 +309,7 @@
                     if (valid) {
                         this.tabRepoData.dialogVisible = false;
                         const data = await this.$api.system.updateRepo(this.addRepoData, this.tabRepoData.update)
+                        this.$message.success('更新成功')
                         if (data) {
                             this.initRepo()
                         }

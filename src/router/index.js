@@ -95,7 +95,7 @@ let router = new Router({
       name: 'Config',
       component: Config,
       meta: {
-        auth: false
+        ...meta
       }
     },
     {
@@ -103,7 +103,7 @@ let router = new Router({
       name: '404',
       component: Error,
       meta: {
-        ...meta
+        auth: false
       }
     }
   ]

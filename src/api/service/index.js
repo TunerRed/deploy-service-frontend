@@ -62,5 +62,9 @@ export default {
 
   uploadFiles(url,data) {
     return https.Upload(url, data);
+  },
+
+  clearDir() {
+    return https.Get(BASE_URL + '/clearUpload');
   }
 }

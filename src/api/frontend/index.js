@@ -6,6 +6,9 @@ export default {
   getFrontendRepoList () {
     return https.Get(BASE_URL+'/getRepoList');
   },
+  updateRepo (repoName) {
+    return https.Get(BASE_URL+'/updateRepo', {repoName});
+  },
   getServerList () {
     return https.Get(BASE_URL+'/getServerList');
   },
