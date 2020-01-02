@@ -33,7 +33,7 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="操作" min-width="140" align="center" fixed="right">
+        <el-table-column label="操作" min-width="200" align="center" fixed="right">
           <template slot-scope="scoped">
             <!-- 操作按钮 -->
             <el-button v-if="scoped.row.pid<=0" type="primary" size="small" @click="onOperation('start', scoped.row)" :disabled="btnStartDisabled(scoped.row)">启动</el-button>

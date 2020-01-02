@@ -1,6 +1,6 @@
 <template>
     <div>
-      <el-table stripe border :data="tableData" size="mini" v-loading="loadingTable">
+      <el-table stripe border :data="tableData" size="mini" v-loading="loadingTable" class="table-header table-header_color">
         <el-table-column label="是否勾选" width="100">
           <template slot-scope="backup">
             <el-checkbox v-model="backup.row.deploy"></el-checkbox>

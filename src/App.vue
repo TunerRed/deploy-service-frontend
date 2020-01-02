@@ -3,8 +3,8 @@
     <el-container id="parent">
       <el-header class="header">
         <el-row style="margin-top: 15px;">
-          <el-col :span="2" :offset="1">
-            <el-button icon="el-icon-s-home" size="medium" type="warning" plain @click="()=>{this.$router.push('/')}">首页</el-button>
+          <el-col :span="2">
+            <el-button icon="el-icon-s-home" size="medium" type="info" circle @click="()=>{this.$router.push('/')}"></el-button>
           </el-col>
           <el-col :span="4" :offset="17">
             <el-button v-if="!isLogin" size="small" type="primary" @click="onLoginClick" style="min-width: 80px;width: 100%;" round>登录</el-button>
@@ -14,11 +14,11 @@
         </el-row>
       </el-header>
       <el-container class="container">
-        <el-aside id="menu-col">
+        <el-aside id="menu-col" width="200px">
           <menu-aside></menu-aside>
         </el-aside>
         <el-main>
-          <img src="./assets/logo.png">
+          <img class="main-img" src="./assets/logo.png" @click="()=>{this.$router.push('/')}">
           <router-view/>
         </el-main>
       </el-container>
@@ -48,6 +48,11 @@ export default {
 }
 </script>
 
+<style scoped>
+  .main-img:hover {
+    cursor: pointer;
+  }
+</style>
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

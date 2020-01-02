@@ -1,6 +1,7 @@
 <template>
   <el-table
     :data="tableData"
+    class="table-header table-header_color"
     style="width: 100%"
     border
     v-loading="loadingData"

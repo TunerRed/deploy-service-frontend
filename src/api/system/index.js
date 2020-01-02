@@ -16,8 +16,8 @@ export default {
   userLogin(username, password) {
     return https.Get(COMMON_BASE_URL + '/login',{username, password: this.encodePass(password)})
   },
-  getCommonMessage() {
-    return https.Get(COMMON_BASE_URL + '/message-list')
+  getCommonMessage(count=5) {
+    return https.Get(COMMON_BASE_URL + '/message-list', {count})
   },
   getStatistic() {
     return https.Get(COMMON_BASE_URL + '/statistic')

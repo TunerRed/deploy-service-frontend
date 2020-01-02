@@ -3,9 +3,9 @@
       <el-upload ref="uploadform" :action="uploadURL" multiple accept=".jar"
                  :auto-upload="false" :on-success="onSuccess" :on-error="onError" :headers="headers"
                  :before-upload="beforeUpload" >
-        <el-button type="primary" size="small" @click="onChoose" slot="trigger"><i class="el-icon-search"></i> 选取文件</el-button>
-        <el-button type="danger"  size="small" @click="onClear"><i class="el-icon-delete"></i> 清空旧文件</el-button>
-        <el-button type="success" size="small" @click="onSubmit"><i class="el-icon-upload2"></i> 上传文件</el-button>
+        <el-button class="upload-btn" type="primary" size="small" @click="onChoose" slot="trigger"><i class="el-icon-search"></i> 选取文件</el-button>
+        <el-button class="upload-btn" type="danger"  size="small" @click="onClear"><i class="el-icon-delete"></i> 清空旧文件</el-button>
+        <el-button class="upload-btn" type="success" size="small" @click="onSubmit"><i class="el-icon-upload2"></i> 上传文件</el-button>
         <!-- :http-request="(file)=>{this.formData.append('file', file.file)}" -->
         <!-- <div style="width: 100%; margin-top: 10px;">
           <div v-show="uploadStatus === 1"><el-tag type="primary">上传中</el-tag></div>
@@ -64,7 +64,8 @@
             },
             async onClear() {
               await this.$api.service.clearDir()
-              this.$emit('onUpload', 2)
+              this.$message.success('已清除旧jar包')
+              this.$emit('onUpload', 1)
             },
             onSuccess (response, file, fileList) {
                 if (response.resultCode === 200) {
@@ -89,12 +90,14 @@
             },
             onChoose() {
                 this.uploadStatus = 0
-                this.$emit('onUpload', 1)
+                this.$emit('onUpload', 2)
             },
         }
     }
 </script>
 
 <style scoped>
-
+.upload-btn {
+  margin-right: 10px;
+}
 </style>
