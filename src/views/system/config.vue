@@ -6,7 +6,9 @@
     <el-tab-pane label="用户管理" name="user">
       <el-row :gutter="20">
         <el-col :span="2">
-          <el-button class="operation" type="primary" size="mini" round icon="el-icon-plus" @click="()=> tabUserData.dialogVisible = true">{{tabUserData.title}}</el-button>
+          <el-button class="operation" type="primary" size="mini" round icon="el-icon-plus" :disabled="tabUserData.loadingData"
+                     @click="()=> tabUserData.dialogVisible = true">{{tabUserData.title}}
+          </el-button>
         </el-col>
       </el-row>
       <el-row class="config-table">
@@ -32,7 +34,7 @@
     <el-tab-pane label="主机管理" name="server">
       <el-row :gutter="20">
         <el-col :span="2">
-          <el-button class="operation" type="primary" size="mini" round icon="el-icon-plus"
+          <el-button class="operation" type="primary" size="mini" round icon="el-icon-plus" :disabled="tabServerData.loadingData"
                      @click="()=> {tabServerData.dialogVisible = true;tabServerData.update = false}">
             {{tabServerData.title}}
           </el-button>
@@ -67,7 +69,7 @@
                 <el-option label="部署后端" value="SERVICE"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="运行路径" prop="runPath" v-if="addServerData.type==='SERVICE'" required>
+            <el-form-item label="运行路径" prop="runPath" :required="addServerData.type==='SERVICE'">
               <el-input size="mini" v-model="addServerData.runPath" placeholder="请输入相对HOME目录的路径" maxlength="50"></el-input>
             </el-form-item>
             <el-form-item label="日志路径" prop="logPath" v-if="addServerData.type==='SERVICE'" required>
@@ -91,7 +93,7 @@
     <el-tab-pane label="仓库管理" name="repo">
       <el-row :gutter="20">
         <el-col :span="2">
-          <el-button class="operation" type="primary" size="mini" round icon="el-icon-plus"
+          <el-button class="operation" type="primary" size="mini" round icon="el-icon-plus" :disabled="tabRepoData.loadingData"
                      @click="()=> {tabRepoData.update = false;tabRepoData.dialogVisible = true}">
             {{tabRepoData.title}}
           </el-button>
@@ -280,11 +282,13 @@
                 this.$refs['addUser'].validate(async valid=>{
                     if (valid) {
                         this.tabUserData.dialogVisible = false;
+                        this.tabUserData.loadingData = true;
                         const data = await this.$api.system.updateUser(this.addUserData, this.tabUserData.update)
                         if (data) {
                             this.initUser()
                             this.$message.success('请注意新用户没有服务器权限')
                         }
+                        this.tabUserData.loadingData = false;
                     } else {
                         this.$message.warning('输入有误')
                     }
@@ -294,11 +298,13 @@
                 this.$refs['addServer'].validate(async valid=>{
                     if (valid) {
                         this.tabServerData.dialogVisible = false;
+                        this.tabServerData.loadingData = true;
                         const data = await this.$api.system.updateServer(this.addServerData, this.tabServerData.update)
                         this.$message.success('更新成功')
                         if (data) {
                             this.initServer()
                         }
+                        this.tabServerData.loadingData = false;
                     } else {
                         this.$message.warning('输入有误')
                     }
@@ -308,11 +314,13 @@
                 this.$refs['addRepo'].validate(async valid=>{
                     if (valid) {
                         this.tabRepoData.dialogVisible = false;
+                        this.tabRepoData.loadingData = true;
                         const data = await this.$api.system.updateRepo(this.addRepoData, this.tabRepoData.update)
                         this.$message.success('更新成功')
                         if (data) {
                             this.initRepo()
                         }
+                        this.tabRepoData.loadingData = false;
                     } else {
                         this.$message.warning('输入有误')
                     }
