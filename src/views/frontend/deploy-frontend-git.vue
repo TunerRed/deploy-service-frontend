@@ -47,9 +47,9 @@
                     this.$refs.start.resetDeploy(false)
                     return
                 } else {
+                    this.$refs.start.resetDeploy(true)
                     await this.$api.frontend.deployFromGit(deployForm.serverIP, deployList)
                     this.$message({type:'success',message:'已开始部署,请等待完成'})
-                    this.$refs.start.resetDeploy(true)
                 }
             },
             async getServerList () {

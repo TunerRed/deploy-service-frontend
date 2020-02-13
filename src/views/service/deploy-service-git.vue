@@ -20,22 +20,43 @@
           }
         },
         mounted() {
-            this.ipList=this.$api.service.getServerList().resultData.list
+            this.init();
         },
         methods: {
-            onDeployServices(deployForm) {
+            async init() {
+                const data = await this.$api.service.getServerList()
+                this.ipList=data.resultData.list
+            },
+            async onDeployServices(deployForm) {
                 let data = this.$refs.table.tableData
+                let emptyBranch = null
                 let deployList=data.map((item)=>{
-                    if (data[i].deploy) {
-                        deployList.push({name:item.name,branch:item.branch})
+                    if (item.pack) {
+                        if (!item.branch || item.branch==="") {
+                            emptyBranch = item.name
+                            return null;
+                        }
+                        return {
+                            repo:item.name,
+                            deploy: item.deploy,
+                            branch:item.branch
+                        }
+
                     }
                 })
+                deployList = deployList.filter(d=>d)
+                if (emptyBranch) {
+                    this.$message.warning('请选择必要的分支 > '+emptyBranch)
+                    this.$refs.start.resetDeploy(false)
+                    return;
+                }
                 if (!deployList || deployList.length === 0) {
                     this.$message.warning('请选择至少一项')
-                    this.$refs.start.deploying = false
+                    this.$refs.start.resetDeploy(false)
                     return
                 }
-                this.$api.service.deployFromGit(deployForm.serverIP, deployForm.phoneNumber,deployList)
+                this.$refs.start.resetDeploy(true)
+                await this.$api.service.deployFromGit(deployForm.serverIP,deployList)
                 this.$message({type:'success',message:'已开始部署,请等待完成'})
             }
         }

@@ -16,9 +16,9 @@ export default {
       resultCode: state_code.SUCCESS,
       resultData: {
         list: [
-          {name: '乌拉-sso', date: '20191018', branchList: ['release-1015','release-0815','dev'],branch:'release-1015',deploy: true},
-          {name: '乌拉-kafka', date: '20191018', branchList: ['release','release-0815','dev'],branch:'dev',deploy: true},
-          {name: 'superise-mother-fucker', date: '20190818', branchList: ['release','master','dev'],branch:'release',deploy: false},
+          {name: '乌拉-sso', location: 'target', branchList: ['release-1015','release-0815','dev']},
+          {name: '乌拉-kafka', location: 'service/target', branchList: ['release','release-0815','dev']},
+          {name: 'superise-mother-fucker', location: 'target', branchList: ['release','master','dev']},
         ]
       }
     }
@@ -48,11 +48,12 @@ export default {
   },
 
   // 从git部署后端
-  deployFromGit(url,phone,deployList) {
-    console.log(url,phone,deployList)
-    return {
-      resultCode: state_code.SUCCESS
-    }
+  deployFromGit(serverIP,deployList) {
+    console.log(serverIP,deployList)
+    return https.Post(BASE_URL+'/deployFromGit', {serverIP,deployList})
+    // return {
+    //   resultCode: state_code.SUCCESS
+    // }
   },
 
   // 先上传文件，之后执行该方法。从文件部署后端
