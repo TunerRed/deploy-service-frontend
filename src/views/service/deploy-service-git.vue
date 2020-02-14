@@ -33,13 +33,14 @@
                 let deployList=data.map((item)=>{
                     if (item.pack) {
                         if (!item.branch || item.branch==="") {
-                            emptyBranch = item.name
+                            emptyBranch = item.repo
                             return null;
                         }
                         return {
-                            repo:item.name,
+                            repo:item.repo,
                             deploy: item.deploy,
-                            branch:item.branch
+                            branch:item.branch,
+                            location: item.location
                         }
 
                     }

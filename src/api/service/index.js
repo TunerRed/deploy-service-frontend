@@ -10,18 +10,8 @@ export default {
   },
 
   // 获取可进行maven打包的仓库列表
-  getServiceList() {
-    // return https.Get(BASE_URL+'/queryList')
-    return {
-      resultCode: state_code.SUCCESS,
-      resultData: {
-        list: [
-          {name: '乌拉-sso', location: 'target', branchList: ['release-1015','release-0815','dev']},
-          {name: '乌拉-kafka', location: 'service/target', branchList: ['release','release-0815','dev']},
-          {name: 'superise-mother-fucker', location: 'target', branchList: ['release','master','dev']},
-        ]
-      }
-    }
+  getRepoList() {
+    return https.Get(BASE_URL+'/getRepoList')
   },
 
   // 获取可部署后端的服务器列表
@@ -49,11 +39,7 @@ export default {
 
   // 从git部署后端
   deployFromGit(serverIP,deployList) {
-    console.log(serverIP,deployList)
     return https.Post(BASE_URL+'/deployFromGit', {serverIP,deployList})
-    // return {
-    //   resultCode: state_code.SUCCESS
-    // }
   },
 
   // 先上传文件，之后执行该方法。从文件部署后端

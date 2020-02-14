@@ -70,9 +70,9 @@
               </el-select>
             </el-form-item>
             <el-form-item label="运行路径" prop="runPath" :required="addServerData.type==='SERVICE'">
-              <el-input size="mini" v-model="addServerData.runPath" placeholder="请输入相对HOME目录的路径" maxlength="50"></el-input>
+              <el-input size="mini" v-model="addServerData.runPath" placeholder="请输入相对HOME目录的路径，前端默认为Tomcat线程指定路径" maxlength="50"></el-input>
             </el-form-item>
-            <el-form-item label="日志路径" prop="logPath" v-if="addServerData.type==='SERVICE'" required>
+            <el-form-item label="日志路径（后端）" prop="logPath" v-if="addServerData.type==='SERVICE'" required>
               <el-input size="mini" v-model="addServerData.logPath" placeholder="请输入相对HOME目录的路径，存放nohup日志" maxlength="50"></el-input>
             </el-form-item>
             <el-form-item label="上传路径" prop="deployPath" required>
@@ -105,7 +105,8 @@
           <el-table-column label="类型" prop="repoType">
             <template slot-scope="scoped">{{(scoped.row.repoType==='FRONTEND'?'前端':'后端')+'仓库'}}</template>
           </el-table-column>
-          <el-table-column label="默认文件夹名" prop="filename"></el-table-column>
+          <el-table-column label="压缩文件名（前端）" prop="filename"></el-table-column>
+          <el-table-column label="包所在位置（后端）" prop="location"></el-table-column>
           <el-table-column label="操作" align="center">
             <template slot-scope="scoped">
               <el-button size="mini" type="success" @click="onBtnUpdateRepo(scoped.row)">更 新</el-button>
@@ -127,6 +128,9 @@
             </el-form-item>
             <el-form-item label="默认文件夹" prop="filename" v-if="addRepoData.repoType==='FRONTEND'">
               <el-input v-model="addRepoData.filename" maxlength="10" placeholder="在tomcat目录下的文件夹名，默认为ROOT"></el-input>
+            </el-form-item>
+            <el-form-item label="包所在位置" prop="location" v-if="addRepoData.repoType==='SERVICE'">
+              <el-input v-model="addRepoData.location" maxlength="50" placeholder="生成jar在仓库文件夹下的相对位置，如【target】"></el-input>
             </el-form-item>
           </el-form>
         </div>
@@ -205,6 +209,10 @@
                         ],
                         filename: [
                             {required:true,message:'默认文件夹名不能为空',trigger:'blur'},
+                            {validator: spaceValidator,trigger: 'blur'}
+                        ],
+                        location: [
+                            {required:true,message:'文件路径不能为空',trigger:'blur'},
                             {validator: spaceValidator,trigger: 'blur'}
                         ],
                     }
@@ -286,7 +294,7 @@
                         const data = await this.$api.system.updateUser(this.addUserData, this.tabUserData.update)
                         if (data) {
                             this.initUser()
-                            this.$message.success('请注意新用户没有服务器权限')
+                            this.$message.success('注册成功，请注意新用户没有服务器访问权限')
                         }
                         this.tabUserData.loadingData = false;
                     } else {
