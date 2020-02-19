@@ -65,8 +65,8 @@
                     return
                 }
                 this.$refs.start.resetDeploy(true)
-                console.log(deployList)
-                // await this.$api.service.deployFromGit(deployForm.serverIP,deployList)
+                // console.log(deployList)
+                await this.$api.service.deployFromGit(deployForm.serverIP,deployList)
                 this.$message({type:'success',message:'已开始部署,请等待完成'})
             }
         }
