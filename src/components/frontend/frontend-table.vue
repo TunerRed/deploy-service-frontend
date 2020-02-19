@@ -23,11 +23,9 @@
     <el-table-column prop="repo" label="仓库" min-width="300"></el-table-column>
     <el-table-column prop="branchList" label="分支" min-width="200">
       <template slot-scope="scoped">
-        <el-tooltip content="打包中请勿切换分支">
-            <el-select v-model="scoped.row.branch" @change="setAvailNpmScript(scoped.row)">
-              <el-option v-for="(item,index) in scoped.row.branchList" :key="index" :label="item" :value="item"></el-option>
-            </el-select>
-        </el-tooltip>
+        <el-select v-model="scoped.row.branch" @change="setAvailNpmScript(scoped.row)">
+          <el-option v-for="(item,index) in scoped.row.branchList" :key="index" :label="item" :value="item"></el-option>
+        </el-select>
       </template>
     </el-table-column>
     <el-table-column prop="scriptList" label="打包方式" min-width="100">
@@ -37,7 +35,7 @@
         </el-select>
       </template>
     </el-table-column>
-    <el-table-column prop="filename" label="打包文件" min-width="100">
+    <el-table-column prop="filename" label="压缩文件夹名" min-width="120">
       <template slot-scope="scoped">
         <el-input maxlength="10" clearable v-model="scoped.row.filename"></el-input>
       </template>

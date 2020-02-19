@@ -2,6 +2,7 @@
   <div>
     <h5>FRONTEND</h5>
     <el-divider><i class="el-icon-menu"></i></el-divider>
+    <Tips :content="tips" style="float: left"></Tips>
     <pack-table ref="table"></pack-table>
     <el-divider><i class="el-icon-s-promotion"></i></el-divider>
     <deploy-start-form ref="start" :ip-list="ipList" @confirm="onDeployFrontend"></deploy-start-form>
@@ -11,12 +12,14 @@
 <script>
     import PackTable from "@/components/frontend/frontend-table";
     import DeployStartForm from "@/components/common/deploy-start-form";
+    import Tips from "@/components/common/tips";
     export default {
         name: "deplot-frontend-git",
-        components: {DeployStartForm, PackTable},
+        components: {DeployStartForm, PackTable,Tips},
         data() {
             return {
-                ipList: []
+                ipList: [],
+                tips: "选择分支时后台会进行checkout操作以获取准确的可运行node脚本，请勿随意切换。打包中请勿切换分支，后台会阻止该操作"
             }
         },
         mounted() {

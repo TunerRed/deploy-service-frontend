@@ -16,7 +16,11 @@
         class="table-header table-header_color"
         v-loading="loading"
       >
-        <el-table-column label="应用" prop="name" min-width="150" align="center" fixed="left"></el-table-column>
+        <el-table-column label="应用" prop="name" min-width="150" align="center" fixed="left">
+          <template slot="header">
+            应用 <Tips :content="tips" class="eureka-tips"></Tips>
+          </template>
+        </el-table-column>
         <el-table-column label="JAR文件" prop="jar" min-width="220" align="center">
           <template slot="header" slot-scope="scoped">
             <el-input v-model="search" size="mini" clearable placeholder="筛选文件" style="margin: 7px 5px 0;padding: 0;width: 80%;"></el-input>
@@ -46,8 +50,10 @@
 </template>
 
 <script>
+    import Tips from "@/components/common/tips";
     export default {
         name: "eureka",
+        components: {Tips},
         data() {
             return {
                 serverIPList: [],
@@ -55,7 +61,8 @@
                 serverIP: '',
                 loading: true,
                 maxActuatorLength: 60,
-                search: ''
+                search: '',
+                tips: "当没有应用名时，表示该jar包名无法匹配正则，找不到对应的启动参数，无法进行启动和停止操作"
             }
         },
         mounted() {
@@ -121,4 +128,7 @@
 </script>
 
 <style scoped>
+  .eureka-tips {
+    margin-top: 7px;
+  }
 </style>
