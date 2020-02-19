@@ -1,7 +1,5 @@
 # deploy-service-frontend
 
-## run-shell
-
 > vue学习入门，调用后端springboot运行服务器脚本部署前端或后台服务
 
 ## Build Setup
@@ -28,3 +26,4 @@ npm run build --report
 5. 杀死/启动指定服务器上的服务
 6. 从git部署前端
 7. 回滚前端
+8. 从git部署后端
