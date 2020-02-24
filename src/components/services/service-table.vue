@@ -9,25 +9,22 @@
     <el-table-column label="打包顺序" width="80" align="center">
       <template slot-scope="scope">
         <el-badge :value="scope.row.order" type="primary"></el-badge>
-<!--        <el-checkbox v-model="scope.row.pack" :disabled="scope.row.deploy"></el-checkbox>-->
       </template>
     </el-table-column>
     <el-table-column prop="repo" label="仓库" min-width="250" align="center"></el-table-column>
     <el-table-column label="是否打包" width="80" align="center">
       <template slot-scope="scope">
-        <el-checkbox v-model="scope.row.pack" :disabled="scope.row.deploy" @change="onPackClick(scope.row)"></el-checkbox>
+        <el-checkbox v-model="scope.row.pack" @change="onPackClick(scope.row)" :disabled="scope.row.packing"></el-checkbox>
       </template>
     </el-table-column>
     <el-table-column label="是否部署" width="80" align="center">
       <template slot-scope="scope">
-        <el-checkbox v-model="scope.row.deploy" @change="onDeployClick(scope.row)"></el-checkbox>
+        <el-checkbox v-model="scope.row.deploy" @change="onDeployClick(scope.row)" :disabled="scope.row.packing"></el-checkbox>
       </template>
     </el-table-column>
     <el-table-column label="操作" min-width="120" align="center">
       <template slot-scope="scope">
-        <el-tooltip effect="light" placement="top" content="下拉列表没有最新分支时，手动更新至最新仓库">
-          <el-button @click="onUpdateRepo(scope.row)" size="mini" plain type="success">手动更新仓库</el-button>
-        </el-tooltip>
+        <el-button @click="onUpdateRepo(scope.row)" size="mini" plain type="success" :disabled="scope.row.packing">手动更新仓库</el-button>
       </template>
     </el-table-column>
     <el-table-column prop="branchList" label="分支" min-width="150" align="center">
@@ -82,9 +79,13 @@ export default {
                 })
             }
         },
-        onUpdateRepo(row) {
+        async onUpdateRepo(row) {
             const repoName = row.repo
-            console.log(repoName)
+            this.loading = true
+            const data = await this.$api.service.updateRepo(repoName).finally(()=>{this.loading = false});
+            if (data.resultCode === 200)
+              row.branchList = data.resultData
+            this.loading = false
         }
     }
 }

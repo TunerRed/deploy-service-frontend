@@ -110,9 +110,11 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (localStorage.getItem('token') && localStorage.getItem("expiration") && localStorage.getItem("expiration") < new Date().getTime()) {
-    localStorage.removeItem('token')
+  if (localStorage.getItem("expiration") && localStorage.getItem("expiration") < new Date().getTime()) {
     store.commit('isLogin', false)
+    localStorage.removeItem('expiration')
+    if (localStorage.getItem('token'))
+      localStorage.removeItem('token')
   }
   if (to.meta.auth && !localStorage.getItem('token')) {
     router.replace({name: 'Login'})

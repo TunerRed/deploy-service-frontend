@@ -13,6 +13,9 @@ export default {
   getRepoList() {
     return https.Get(BASE_URL+'/getRepoList')
   },
+  updateRepo (repoName) {
+    return https.Get(BASE_URL+'/updateRepo', {repoName});
+  },
 
   // 获取可部署后端的服务器列表
   getServerList() {

@@ -8,16 +8,14 @@
   >
     <el-table-column label="是否勾选" width="100">
       <template slot-scope="scoped">
-        <el-tooltip content="当该仓库正在被其他用户打包时，无法勾选，也无法切换分支" :disabled="scoped.row.branchList !== null">
-          <el-checkbox v-model="scoped.row.deploy" :disabled="scoped.row.branchList === null"></el-checkbox>
+        <el-tooltip content="当该仓库正在被其他用户打包时，无法勾选，也无法切换分支" :disabled="scoped.row.packing">
+          <el-checkbox v-model="scoped.row.deploy" :disabled="scoped.row.packing"></el-checkbox>
         </el-tooltip>
       </template>
     </el-table-column>
     <el-table-column label="操作" min-width="140" align="center">
       <template slot-scope="scoped">
-        <el-tooltip content="当分支列表没有目标分支时，点击按钮更新代码。打包前会自动更新代码">
-          <el-button type="success" size="mini" plain @click="updateRepo(scoped.$index)" :disabled="scoped.row.branchList == null">更新仓库</el-button>
-        </el-tooltip>
+        <el-button type="success" size="mini" plain @click="updateRepo(scoped.row)" :disabled="scoped.row.packing">手动更新</el-button>
       </template>
     </el-table-column>
     <el-table-column prop="repo" label="仓库" min-width="300"></el-table-column>
@@ -66,18 +64,15 @@
             async setAvailNpmScript (row) {
                 // console.log(row.repo,row.branch)
                 this.loadingData = true
-                const data = await this.$api.frontend.getAvailNpmScript(row.repo,row.branch)
+                const data = await this.$api.frontend.getAvailNpmScript(row.repo,row.branch).finally(()=>this.loadingData = false)
                 row.scriptList=data.resultData
-                this.loadingData = false
             },
-            async updateRepo (index) {
+            async updateRepo (row) {
                 this.loadingData = true;
-                const data = await this.$api.frontend.updateRepo(this.tableData[index].repo)
+                const data = await this.$api.frontend.updateRepo(row.repo).finally(()=>{this.loadingData = false});
                 if (data && data.resultData) {
-                  // this.tableData[index] = data.resultData
-                  this.getTableData()
+                  row.branchList = data.resultData
                 }
-                this.loadingData = false
             }
         }
     }

@@ -12,7 +12,8 @@
                 dateList: [],
                 chart: '',
                 option: [],
-                loadingData: true
+                loadingData: true,
+                maxGraphCount: 20
             }
         },
         mounted() {
@@ -97,7 +98,7 @@
                     visualMap: {
                         show: false,
                         min: 0,
-                        max: 10,
+                        max: this.maxGraphCount,
                         calculable: true,
                         seriesIndex: [1],
                         orient: 'vertical',
