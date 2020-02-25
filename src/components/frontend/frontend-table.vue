@@ -71,7 +71,7 @@
                 this.loadingData = true;
                 const data = await this.$api.frontend.updateRepo(row.repo).finally(()=>{this.loadingData = false});
                 if (data && data.resultData) {
-                  row.branchList = data.resultData
+                  row.branchList = data.resultData.branchList
                 }
             }
         }

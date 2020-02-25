@@ -14,7 +14,7 @@
     <el-table-column prop="repo" label="仓库" min-width="250" align="center"></el-table-column>
     <el-table-column label="是否打包" width="80" align="center">
       <template slot-scope="scope">
-        <el-checkbox v-model="scope.row.pack" @change="onPackClick(scope.row)" :disabled="scope.row.packing"></el-checkbox>
+        <el-checkbox v-model="scope.row.pack" @change="onPackClick(scope.row)" :disabled="scope.row.packing || scope.row.deploy"></el-checkbox>
       </template>
     </el-table-column>
     <el-table-column label="是否部署" width="80" align="center">
@@ -59,7 +59,7 @@ export default {
             this.tableData = data.resultData.repoList.map(item=>{return {...item,'pack':false,'deploy':false,'branch':null,order:0}})
         },
         onDeployClick(row) {
-            if (row.deploy) {
+            if (row.deploy && !row.pack) {
                 row.pack = true
                 this.onPackClick(row)
             }
@@ -84,7 +84,7 @@ export default {
             this.loading = true
             const data = await this.$api.service.updateRepo(repoName).finally(()=>{this.loading = false});
             if (data.resultCode === 200)
-              row.branchList = data.resultData
+              row.branchList = data.resultData.branchList
             this.loading = false
         }
     }

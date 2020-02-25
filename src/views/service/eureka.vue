@@ -116,11 +116,11 @@
                 })
             },
             btnStartDisabled(row) {
-                return row.pid === -1
+                return row.pid === -1 || !row.name
                 // return (row.disableStart != null && row.disableStart)
             },
             btnStopDisabled(row) {
-                return row.pid === 0
+                return row.pid === 0 || !row.name
                 // return (row.disableStop != null && row.disableStop)
             }
         }
