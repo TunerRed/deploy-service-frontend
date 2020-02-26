@@ -36,8 +36,8 @@ export default {
     return https.Get(BASE_URL+'/stop', {serverIP, filename, pid})
   },
   // 启动远程服务器上的服务
-  startService(serverIP, filename) {
-    return https.Get(BASE_URL+'/start', {serverIP, filename})
+  startService(serverIP, filenames) {
+    return https.Post(BASE_URL+'/start', {serverIP, filenames})
   },
 
   // 从git部署后端

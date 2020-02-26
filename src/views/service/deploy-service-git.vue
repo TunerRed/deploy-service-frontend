@@ -31,42 +31,40 @@
                 this.ipList=data.resultData.list
             },
             async onDeployServices(deployForm) {
-                let data = this.$refs.table.tableData.sort((a,b)=>{
-                    if (!a.order) {
-                        return 1
+                let data = []
+                let emptyBranch = null
+                this.$refs.table.tableData.forEach(item=>{
+                  if (item.pack) {
+                    if (!item.branch || item.branch==="") {
+                      emptyBranch = item.repo
+                    } else {
+                      data.push({
+                        repo:item.repo,
+                        deploy: item.deploy,
+                        branch:item.branch,
+                        location: item.location,
+                        order: item.order
+                      })
                     }
+                  }
+                })
+                data.sort((a,b)=>{
                     return a.order - b.order
                 })
-                let emptyBranch = null
-                let deployList=data.map((item)=>{
-                    if (item.pack) {
-                        if (!item.branch || item.branch==="") {
-                            emptyBranch = item.repo
-                            return null;
-                        }
-                        return {
-                            repo:item.repo,
-                            deploy: item.deploy,
-                            branch:item.branch,
-                            location: item.location
-                        }
-
-                    }
-                })
-                deployList = deployList.filter(d=>d)
+                data = data.filter(d=>d)
                 if (emptyBranch) {
                     this.$message.warning('请选择必要的分支 > '+emptyBranch)
                     this.$refs.start.resetDeploy(false)
                     return;
                 }
-                if (!deployList || deployList.length === 0) {
+                if (!data || data.length === 0) {
                     this.$message.warning('请选择至少一项')
                     this.$refs.start.resetDeploy(false)
                     return
                 }
                 this.$refs.start.resetDeploy(true)
                 // console.log(deployList)
-                await this.$api.service.deployFromGit(deployForm.serverIP,deployList)
+                await this.$api.service.deployFromGit(deployForm.serverIP,data)
                 this.$message({type:'success',message:'已开始部署,请等待完成'})
             }
         }
