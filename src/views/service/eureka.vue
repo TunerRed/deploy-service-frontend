@@ -2,6 +2,7 @@
     <div>
       <h5>服务列表</h5>
       <el-divider><i class="el-icon-cpu"></i></el-divider>
+      <Tips :content="tips2" style="float: left"></Tips>
       <el-row class="eureka-row">
         <el-select size="small" v-model="serverIP">
           <el-option v-for="(serverIP, index) in serverIPList" :key="index" :label="serverIP" :value="serverIP"></el-option>
@@ -65,7 +66,8 @@
 </template>
 
 <script>
-    import Tips from "@/components/common/tips";
+    import Tips from "@/components/common/tips"
+    import { save } from "../../utils/saveFile"
     export default {
         name: "eureka",
         components: {Tips},
@@ -78,6 +80,7 @@
                 maxActuatorLength: 60,
                 search: '',
                 tips: "当没有应用名时，表示该jar包名无法匹配正则，找不到对应的启动参数，无法进行启动和停止操作",
+                tips2: "由于技术原因，下载时缺少进度条，敬请理解",
                 totalCount: 0,
                 enableBatchStart: false
             }
@@ -167,16 +170,7 @@
                 }
                 // console.log("download", this.serverIP, filename)
                 this.$api.service.download(this.serverIP, filename).then(res=>{
-                    let blob = new Blob([res],{type: '.jar'});
-                    if (window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(blob, filename)
-                    } else {
-                        let objURL = URL.createObjectURL(blob)
-                        let a = document.createElement('a')
-                        a.href = objURL
-                        a.download = filename
-                        a.click()
-                    }
+                    save(res, filename)
                 })
             },
             btnStartDisabled(row) {

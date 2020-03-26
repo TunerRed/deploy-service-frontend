@@ -4,7 +4,7 @@ import message from '@/api/showMsg'
 
 const service = axios.create({
   baseURL: '/api',
-  timeout: 30000
+  timeout: 20000
 })
 const max_err_len = 10
 
@@ -24,18 +24,18 @@ service.interceptors.request.use((config) => {
 service.interceptors.response.use((res) =>{
   const dataAxios = res.data;
   if (dataAxios.resultCode === undefined || dataAxios.resultCode === state_code.SUCCESS)
-    return Promise.resolve(dataAxios);
+    return Promise.resolve(dataAxios)
   else if (dataAxios.resultCode === state_code.USER_LOGIN_FAILURE) {
     message.createInfo(dataAxios.resultMsg)
     localStorage.removeItem('token')
-    return Promise.reject(dataAxios.resultMsg);
+    return Promise.reject(dataAxios.resultMsg)
   } else if (dataAxios.resultCode === state_code.FILE_EXCEED){
-    return Promise.resolve(dataAxios);
+    return Promise.resolve(dataAxios)
   } else {
     const msg = dataAxios.resultMsg
     if(msg) {
       message.createError(msg.length>max_err_len?msg.slice(0,max_err_len)+'...':msg)
-      return Promise.reject(msg);
+      return Promise.reject(msg)
     } else {
       message.createError("服务器内部错误！")
       Promise.reject(dataAxios)

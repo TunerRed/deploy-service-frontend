@@ -2,7 +2,7 @@
 * codevoid
 * 弹出错误信息
 * */
-import {Message} from "element-ui";
+import {Message,Notification} from "element-ui";
 
 export default {
   createError(val) {
@@ -15,6 +15,13 @@ export default {
     Message({
       type: 'info',
       message: val
+    })
+  },
+  notify(title, msg, duration = 4500) {
+    Notification({
+      title,
+      message: msg,
+      duration
     })
   }
 }

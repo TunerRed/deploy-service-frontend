@@ -6,7 +6,7 @@
     border
     v-loading="loadingData"
   >
-    <el-table-column label="是否勾选" width="100">
+    <el-table-column label="是否勾选" width="100" align="center">
       <template slot-scope="scoped">
         <el-tooltip content="当该仓库正在被其他用户打包时，无法勾选，也无法切换分支" :disabled="scoped.row.packing">
           <el-checkbox v-model="scoped.row.deploy" :disabled="scoped.row.packing"></el-checkbox>
@@ -19,10 +19,13 @@
       </template>
     </el-table-column>
     <el-table-column prop="repo" label="仓库" min-width="300"></el-table-column>
-    <el-table-column prop="branchList" label="分支" min-width="200">
+    <el-table-column prop="branchList" label="分支" min-width="200" align="center">
+      <template slot="header" slot-scope="scoped">
+        <el-input v-model="branchFilterCon" size="mini" clearable placeholder="筛选分支" style="margin: 7px 5px 0;padding: 0;width: 80%;"></el-input>
+      </template>
       <template slot-scope="scoped">
         <el-select v-model="scoped.row.branch" @change="setAvailNpmScript(scoped.row)">
-          <el-option v-for="(item,index) in scoped.row.branchList" :key="index" :label="item" :value="item"></el-option>
+          <el-option v-for="(item,index) in branchFilter(scoped.row.branchList)" :key="index" :label="item" :value="item"></el-option>
         </el-select>
       </template>
     </el-table-column>
@@ -46,34 +49,41 @@
         name: "frontend-table",
         data() {
             return {
-                tableData: [],
-                loadingData: true
+              tableData: [],
+              branchFilterCon: '',
+              loadingData: true
             }
         },
         mounted() {
             this.getTableData()
         },
         methods: {
-            async getTableData() {
-                this.loadingData = true;
-                let data = await this.$api.frontend.getFrontendRepoList()
-                this.tableData = data.resultData.repoList
-                this.loadingData = false
-                // console.log(this.tableData)
-            },
-            async setAvailNpmScript (row) {
-                // console.log(row.repo,row.branch)
-                this.loadingData = true
-                const data = await this.$api.frontend.getAvailNpmScript(row.repo,row.branch).finally(()=>this.loadingData = false)
-                row.scriptList=data.resultData
-            },
-            async updateRepo (row) {
-                this.loadingData = true;
-                const data = await this.$api.frontend.updateRepo(row.repo).finally(()=>{this.loadingData = false});
-                if (data && data.resultData) {
-                  row.branchList = data.resultData.branchList
-                }
+          async getTableData() {
+              this.loadingData = true;
+              let data = await this.$api.frontend.getFrontendRepoList()
+              this.tableData = data.resultData.repoList
+              this.loadingData = false
+              // console.log(this.tableData)
+          },
+          async setAvailNpmScript (row) {
+              // console.log(row.repo,row.branch)
+              this.loadingData = true
+              const data = await this.$api.frontend.getAvailNpmScript(row.repo,row.branch).finally(()=>this.loadingData = false)
+              row.scriptList=data.resultData
+          },
+          async updateRepo (row) {
+              this.loadingData = true;
+              const data = await this.$api.frontend.updateRepo(row.repo).finally(()=>{this.loadingData = false});
+              if (data && data.resultData) {
+                row.branchList = data.resultData.branchList
+              }
+          },
+          branchFilter(branchList) {
+            if (!this.branchFilterCon) {
+              return branchList
             }
+            return branchList.filter(item => item.indexOf(this.branchFilterCon) !== -1)
+          }
         }
     }
 </script>

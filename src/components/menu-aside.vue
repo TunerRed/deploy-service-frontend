@@ -21,6 +21,7 @@
       <el-submenu index="2">
         <template slot="title"><i class="el-icon-location"></i><span>前端</span></template>
         <el-menu-item index="/frontend/deploy">部署</el-menu-item>
+        <el-menu-item index="/frontend/resource">我的资源</el-menu-item>
         <el-menu-item index="/frontend/rollback">回滚</el-menu-item>
       </el-submenu>
       <el-menu-item index="/system/config" ><i class="el-icon-setting"></i>我的配置</el-menu-item>
