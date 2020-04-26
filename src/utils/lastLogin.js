@@ -2,14 +2,14 @@ const key = 'lastClearFolder'
 
 export function getLastLoginDate() {
   if (!localStorage.hasOwnProperty(key)) {
-    localStorage.setItem(key, JSON.stringify(new Date().getTime()))
+    resetLastLoginDate()
   }
   let retDate = new Date(JSON.parse(localStorage.getItem(key)))
   return retDate
 }
 
 export function resetLastLoginDate() {
-  localStorage.setItem(key, JSON.stringify(new Date()))
+  localStorage.setItem(key, JSON.stringify(new Date().getTime()))
 }
 
 export function daysBetween(dateStart, dateEnd) {

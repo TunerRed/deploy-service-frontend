@@ -75,6 +75,10 @@ export default {
 #menu-col {
   background-color: #545c64;
 }
+#nprogress .bar {
+  background: #0000ff !important;
+  height: 4px;
+}
 /*修改全局table表头高度，需要添加class为table-header*/
 .table-header .el-table__header th {
   padding: 0;

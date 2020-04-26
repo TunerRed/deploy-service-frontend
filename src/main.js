@@ -8,6 +8,8 @@ import elementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // echarts地图框架
 import echarts from 'echarts'
+// 进度条
+import 'nprogress/nprogress.css'
 // 全局api
 import api from '@/api/api.js'
 // 使用vuex

@@ -22,43 +22,22 @@
         <deploy-start-form ref="start" :ip-list="ipList" @confirm="onDeployServices"></deploy-start-form>
       </el-col>
     </el-row>
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%" center>
-      <div style="text-align: left">
-        <p>检测到您已超过{{maxClearDays}}未清理个人文件夹，这将导致您部署新包时同时部署已存在于文件夹内的旧包。</p>
-        <p>是否清理个人文件夹？</p>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">下次一定</el-button>
-        <el-button type="primary" @click="onClear" :loading="clearFolder">一键清理</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
     import DeployStartForm from "@/components/common/deploy-start-form";
     import DeployUploader from "@/components/common/deploy-uploader";
-    import { getLastLoginDate, resetLastLoginDate, daysBetween } from '@/utils/lastLogin.js'
     export default {
         name: "deploy-service-file",
         components: {DeployUploader, DeployStartForm},
         data() {
             return {
                 ipList: [],
-                steps: 0,
-                dialogVisible: false,
-                clearFolder: false,
-                maxClearDays: 7
+                steps: 0
             }
         },
         mounted() {
-          const days = daysBetween(getLastLoginDate(), new Date())
-          if (days >= this.maxClearDays) {
-            this.dialogVisible = true
-          }
           this.initData()
         },
         methods: {
@@ -74,15 +53,6 @@
                 this.$refs.start.deploying = true;
                 this.$message({type:'success',message:'已开始部署,请等待完成'});
                 this.steps = 5
-            },
-            async onClear() {
-              // this.refs['uploader']
-              this.clearFolder = true
-              await this.$api.service.clearDir().finally(() => {
-                this.clearFolder = false
-                this.dialogVisible = false
-              })
-              resetLastLoginDate()
             },
             onUpload(val) {
                 this.steps = val

@@ -17,10 +17,24 @@
         <el-alert v-for="(item, index) in nameList" :key="index" :title="item"
                   type="success" center :closable="false" style="margin: 0 5% 5px;width: 90%;"></el-alert>
       </el-drawer>
+      <el-dialog
+              title="提示"
+              :visible.sync="dialogVisible"
+              width="30%" center>
+        <div style="text-align: left">
+          <p>检测到您已超过{{maxClearDays}}未清理个人文件夹，这将导致您部署新包时同时部署已存在于文件夹内的旧包。</p>
+          <p>是否清理个人文件夹？</p>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">下次一定</el-button>
+          <el-button type="primary" @click="onClear" :loading="clearFolder">一键清理</el-button>
+        </span>
+      </el-dialog>
     </div>
 </template>
 
 <script>
+  import { getLastLoginDate, resetLastLoginDate, daysBetween } from '@/utils/lastLogin.js'
     export default {
         name: "deploy-uploader",
         data() {
@@ -32,8 +46,17 @@
                 nameList: [],
                 headers: {
                   Authorization: localStorage.getItem('token')
-                }
+                },
+                dialogVisible: false,
+                clearFolder: false,
+                maxClearDays: 7
             }
+        },
+        mounted() {
+          const days = daysBetween(getLastLoginDate(), new Date())
+          if (days >= this.maxClearDays) {
+            this.dialogVisible = true
+          }
         },
         methods: {
             beforeUpload(file) {
@@ -63,7 +86,12 @@
                 // }
             },
             async onClear() {
-              await this.$api.service.clearDir()
+              this.clearFolder = true
+              await this.$api.service.clearDir().finally(() => {
+                this.clearFolder = false
+                this.dialogVisible = false
+              })
+              resetLastLoginDate()
               this.$message.success('已清除旧jar包')
               this.$emit('onUpload', 1)
             },

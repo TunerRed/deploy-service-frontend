@@ -1,8 +1,10 @@
 import message from '@/api/showMsg'
+import NProgress from 'nprogress'
 const max_err_len = 10
 
 export function save(res, filename) {
   if (res.type === 'application/json') {
+    NProgress.done()
     let reader = new FileReader()
     reader.readAsText(res, 'utf-8')
     reader.onload = (e) => {
@@ -19,5 +21,6 @@ export function save(res, filename) {
     a.href = objURL
     a.download = filename
     a.click()
+    NProgress.done()
   }
 }

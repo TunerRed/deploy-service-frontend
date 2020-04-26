@@ -1,5 +1,5 @@
 import https from '@/utils/axios'
-import message from '@/api/showMsg'
+import NProgress from "nprogress";
 
 const BASE_URL = '/service'
 
@@ -23,10 +23,7 @@ export default {
   },
 
   download(serverIP, filename) {
-    message.notify(
-      '正在请求下载接口',
-      '由于技术原因下载时缺少进度条，敬请理解'
-    );
+    NProgress.start()
     return https.Download(BASE_URL+'/download', {serverIP, filename})
   },
 

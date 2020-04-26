@@ -2,7 +2,6 @@
     <div>
       <h5>我的资源下载</h5>
       <el-divider><i class="el-icon-download"></i></el-divider>
-      <Tips :content="tips" style="float: left"></Tips>
       <el-table :data="list" border class="table-header table-header_color" v-loading="loading">
           <el-table-column label="文件" prop="filename"></el-table-column>
           <el-table-column label="操作" min-width="200" align="center" fixed="right">
@@ -16,14 +15,11 @@
 
 <script>
 import { save } from "../../utils/saveFile"
-import Tips from "@/components/common/tips";
 export default {
     name: "resource",
-    components: {Tips},
     data() {
       return {
         loading: false,
-        tips: '由于技术原因，下载时缺少进度条，敬请理解',
         list: []
       }
     },
@@ -48,6 +44,7 @@ export default {
         this.$api.frontend.download(filename).then(res=>{
           save(res, filename)
         })
+
       }
     }
 }
