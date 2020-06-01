@@ -49,7 +49,7 @@
                 },
                 dialogVisible: false,
                 clearFolder: false,
-                maxClearDays: 7
+                maxClearDays: 3
             }
         },
         mounted() {

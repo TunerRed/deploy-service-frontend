@@ -134,6 +134,10 @@
               let deployList = arr.map(item=>{return item.name})
               this.enableBatchStart = false
               await this.$api.service.startService(this.serverIP, deployList);
+              this.totalCount = 0
+              this.tableData.forEach(row=>{
+                row.order = 0
+              })
               this.$message.success('服务启动中，请稍后刷新列表或在首页查看')
             },
             onCancelBatchStart() {
